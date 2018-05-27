@@ -1,3 +1,3 @@
-temp/ #ignore all files within temp
+#temp/ #ignore all files within temp
 todo/ #ignore all the files within todo
 
