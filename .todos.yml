@@ -1,0 +1,5 @@
+todos:
+- title: Ajouter Moose a la liste des fichiers cpan
+  description: Moose devrait aider a la construction OO
+  marked: true
+  id: 0
