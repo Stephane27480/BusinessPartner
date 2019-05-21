@@ -10,7 +10,7 @@ package Insee;
  has 'user' , is => 'ro', isa => 'Str';
  has 'consKey', is => 'ro', isa => 'Str';
  has 'secKey', is => 'ro', isa => 'Str';
- has 'token', is => 'ro', isa => 'Str';
+ has 'token', is => 'ro', isa => 'Str', writer => '_set_token';
  has 'date', is=> 'ro', isa => 'Str', default => strftime( "%F", localtime);
 sub get_token {
 my  $self = shift ;
@@ -24,7 +24,7 @@ $curl->setopt(CURLOPT_CUSTOMREQUEST, "POST");
 $curl->setopt(CURLOPT_POSTFIELDS, $param );
 
 $curl->setopt(CURLOPT_USERNAME, $self->consKey );
-$curl->setopt(CURLOPT_PASSWORD, $self->$secKey );
+$curl->setopt(CURLOPT_PASSWORD, $self->secKey );
 # A filehandle, reference to a scalar or reference to a typeglob can be used here.
 my $response_body;
 $curl->setopt(CURLOPT_WRITEDATA,\$response_body);
@@ -39,7 +39,7 @@ if ($retcode == 0) {
 #        print "*"x 20;
         my ( $responseNew ) = $response_body =~ /{"access_token":"(\S*)","scope/ ;
 #        print "\n $responseNew \n";
-		return $responseNew;
+		$self->_set_token( $responseNew);
 	} else {
         # Error code, type of error, error message
         print("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
@@ -47,7 +47,7 @@ if ($retcode == 0) {
 }
 
 sub revoke_token {
-my ($user, $consKey, $secKey,$token) = @_ ;
+my ($self, $user, $consKey, $secKey,$token) = @_ ;
 my $url = "https://api.insee.fr/revoke";
 my $curl = WWW::Curl::Easy->new;
 my $param= "token={$self->token}";
@@ -100,10 +100,15 @@ if ($retcode == 0) {
         my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
         # judge result and next action based on $response_code
 #        print("Received response: $response_body\n");
+		return $response_code ;        
 	} else {
         # Error code, type of error, error message
         carp("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
 	}
 }
-
+sub get_date {
+	my $self = shift;
+	#	 print " $self->date";
+	return $self->date ;
+}
 1;

@@ -1,6 +1,11 @@
+requires 'Modern::Perl';
 requires 'Plack';
 requires 'Plack::Test';
 requires 'Dancer2';
 requires 'REST::Client' ;
 requires 'HTTP::Request::Common ;
 requires 'Moose' ;
+requires 'Business::Tax::VAT::Validation';
+requires 'DBI';
+requires 'DBD::Pg' ;
+requires 'MongoDB';
