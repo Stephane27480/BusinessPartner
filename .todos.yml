@@ -3,3 +3,16 @@ todos:
   description: Moose devrait aider a la construction OO
   marked: false
   id: 0
+- title: Exception Insee.pm
+  description: Ajout d'une classe d'exception et utilisation dans Insee.pm
+  marked: false
+  id: 0
+- title: Traitement des bases de données
+  description: Voir les fichiers de l'INSEE pour les mettre en version Minimum (SIREN,
+    SIRET,Adresse)
+  marked: false
+  id: 0
+- title: Voir Comment traiter les update
+  description: Faire un fichier de creation et un de suppression
+  marked: false
+  id: 0
