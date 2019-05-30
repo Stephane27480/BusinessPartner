@@ -108,7 +108,7 @@ my $retcode = $curl->perform;
 if ($retcode == 0) {
         my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
         # judge result and next action based on $response_code
-        if ( $response_code = 200 ){
+        if ( $response_code == 200 ){
 			my @valid = $self->format_body( $response_body );
 			return @valid ;
 		}
