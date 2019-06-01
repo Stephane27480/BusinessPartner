@@ -2,7 +2,7 @@
  use FindBin;
  use lib "$FindBin::Bin/../lib";
  use warnings;
- use Insee ;
+ use InseeSiret ;
 use Test::More tests => 6;
 use Moose;
 
@@ -11,7 +11,7 @@ my $user = "INSEE27480";
 my $consKey = "7z6CyvFaIzyH1WC4NX06zUIg3j8a";
 my $secKey = "N2FYCzsyOl3qZJwvf_WeWiMIKzga";
 
-my $class = Insee->new( user => $user,
+my $class = InseeSiret->new( user => $user,
 						consKey => $consKey,
 						secKey => $secKey );
 my $ruser = $class->user;

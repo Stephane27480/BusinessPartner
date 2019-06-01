@@ -1,8 +1,4 @@
 todos:
-- title: Ajouter Moose a la liste des fichiers cpan
-  description: Moose devrait aider a la construction OO
-  marked: false
-  id: 0
 - title: Exception Insee.pm
   description: Ajout d'une classe d'exception et utilisation dans Insee.pm
   marked: false
@@ -14,5 +10,13 @@ todos:
   id: 0
 - title: Voir Comment traiter les update
   description: Faire un fichier de creation et un de suppression
+  marked: false
+  id: 0
+- title: Mettre la méthode getSIRET en plus générique
+  description: Permettre plusieurs format de sortie en modularisant plus
+  marked: false
+  id: 0
+- title: Ajout de pod dans les modules
+  description: Ajouter la documentation dans les modules
   marked: false
   id: 0

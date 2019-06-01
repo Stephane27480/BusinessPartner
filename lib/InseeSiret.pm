@@ -1,10 +1,11 @@
-package Insee;
+package InseeSiret;
 use Modern::Perl ;
  use Carp;
  use WWW::Curl::Easy;
  use Moose;
  use POSIX qw(strftime);
  use Data::Dumper;
+ use MyException::InseeCurl;
 
  # Attributes
  has 'user' , is => 'ro', isa => 'Str';
@@ -37,7 +38,18 @@ if ($retcode == 0) {
         # judge result and next action based on $response_code
 #        print("Received response: $response_body\n");
 #        print "*"x 20;
-        my ( $responseNew ) = $response_body =~ /{"access_token":"(\S*)","scope/ ;
+		if ( $response_code == 200 ){
+        	my ( $responseNew ) = $response_body =~ /"access_token":"(\S*)","scope/ ;
+#        	print "\n $responseNew \n";
+			$self->_set_token( $responseNew);
+		} else {	
+			#TODO implement exception
+			MyException::InseeCurl->throw( 
+				code => $response_code,
+				method => 'get_Token'
+				 );							
+		}
+        my ( $responseNew ) = $response_body =~ /"access_token":"(\S*)","scope/ ;
 #        print "\n $responseNew \n";
 		$self->_set_token( $responseNew);
 	} else {
@@ -73,14 +85,20 @@ my $retcode = $curl->perform;
 if ($retcode == 0) {
         my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
         # judge result and next action based on $response_code
-#        print("Received response: $response_body\n");
+        if ( $response_code != 200 ){
+			#TODO implement exception
+			MyException::InseeCurl->throw( 
+				code => $response_code,
+				method => 'revoke_Token'
+				 );							
+		}
 	} else {
         # Error code, type of error, error message
         carp("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
 	}
 }
 
-sub getSiret{
+sub getSiret {
 my $self = shift;
 my $siren = shift ;
 my $date = $self->date ;
@@ -88,7 +106,6 @@ my $query = "siren:$siren&date=$date";
 # &periode(etatAdministratifEtablissement:A)
 my $url = "https://api.insee.fr/entreprises/sirene/V3/siret?q=";
 $url .= $query ;
-say $url ;
 my $curl = WWW::Curl::Easy->new;
 my $token = $self->token;
 my @headers = ("Accept: application/json","Authorization: Bearer $token");
@@ -110,13 +127,20 @@ if ($retcode == 0) {
         # judge result and next action based on $response_code
         if ( $response_code == 200 ){
 			my @valid = $self->format_body( $response_body );
+			#	print Dumper @valid;
 			return @valid ;
-		}
+		} else {
 		#TODO  implement exception
-	} else {
+			MyException::InseeCurl->throw( 
+				code => $response_code,
+				method => 'getSIRET'
+				 );							
+		} 
+}else {
         # Error code, type of error, error message
-        carp("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
-	}
+		#    carp("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
+		#}
+}
 }
 sub format_body {
 	my $self = shift;

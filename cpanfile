@@ -9,3 +9,6 @@ requires 'Business::Tax::VAT::Validation';
 requires 'DBI';
 requires 'DBD::Pg' ;
 requires 'MongoDB';
+requires 'WWW::Curl::Easy' ;
+requires 'Exception::Class' ;
+requires 'Throwable' ;
