@@ -1,11 +1,13 @@
-package InseeSiret;
+package InseeSiret {
 use Modern::Perl ;
  use Carp;
  use WWW::Curl::Easy;
  use Moose;
  use POSIX qw(strftime);
  use Data::Dumper;
- use MyException::InseeCurl;
+ use FindBin;
+ use lib "$FindBin::Bin/./";
+ use ExInseeCurl;
 
  # Attributes
  has 'user' , is => 'ro', isa => 'Str';
@@ -36,24 +38,22 @@ my $retcode = $curl->perform;
 if ($retcode == 0) {
         my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
         # judge result and next action based on $response_code
-#        print("Received response: $response_body\n");
-#        print "*"x 20;
 		if ( $response_code == 200 ){
         	my ( $responseNew ) = $response_body =~ /"access_token":"(\S*)","scope/ ;
-#        	print "\n $responseNew \n";
 			$self->_set_token( $responseNew);
 		} else {	
-			#TODO implement exception
-			MyException::InseeCurl->throw( 
+			print "$response_code \n";
+			ExInseeCurl->throw({ 
 				code => $response_code,
-				method => 'get_Token'
-				 );							
+				method => 'revoke_Token'
+			} );							
 		}
         my ( $responseNew ) = $response_body =~ /"access_token":"(\S*)","scope/ ;
 #        print "\n $responseNew \n";
 		$self->_set_token( $responseNew);
 	} else {
         # Error code, type of error, error message
+		#TODO implement exception
         print("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
 	}
 }
@@ -75,7 +75,6 @@ $curl->setopt(CURLOPT_POSTFIELDS, $param );
 
 $curl->setopt(CURLOPT_USERNAME, $consKey );
 $curl->setopt(CURLOPT_PASSWORD, $secKey );
-# A filehandle, reference to a scalar or reference to a typeglob can be used here.
 my $response_body;
 $curl->setopt(CURLOPT_WRITEDATA,\$response_body);
 # Starts the actual request
@@ -86,21 +85,26 @@ if ($retcode == 0) {
         my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
         # judge result and next action based on $response_code
         if ( $response_code != 200 ){
-			#TODO implement exception
-			MyException::InseeCurl->throw( 
+			print "$response_code \n";
+			ExInseeCurl->throw({ 
 				code => $response_code,
-				method => 'revoke_Token'
-				 );							
+				method => 'get_Token'
+			} );							
 		}
 	} else {
+		#TODO implement exception
         # Error code, type of error, error message
         carp("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
 	}
 }
 
+
+
 sub getSiret {
 my $self = shift;
 my $siren = shift ;
+my $regex = shift;
+my $formatRef = shift;
 my $date = $self->date ;
 my $query = "siren:$siren&date=$date";
 # &periode(etatAdministratifEtablissement:A)
@@ -109,7 +113,11 @@ $url .= $query ;
 my $curl = WWW::Curl::Easy->new;
 my $token = $self->token;
 my @headers = ("Accept: application/json","Authorization: Bearer $token");
-
+#my $regex = '\"periodesEtablissement\":\[\{\"dateFin\":null,\"dateDebut\":\"\d{4}-\d{2}-\d{2}\",\"etatAdministratifEtablissement\":\"A\"';
+#my %format ;
+#	$format{"siret:"} = '\"siret\":\"(\d{14})\"' ;
+#	$format{"siren:"} = '(^\"\d{9})\"' ;
+#	$format{"adressEtablissement:"} = '\"adresseEtablissement\":(\{\".*\}),\"adresse2Etablissement\"' ;
 #curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 64825907-8076-3ef2-a66d-87cf0fc3dd3d' 'https://api.insee.fr/entreprises/sirene/V3/siret?q=siren%3A432673838%20AND%20etatAdministratifUniteLegale%20%3AA&date=2019-05-21'
 $curl->setopt(CURLOPT_HEADER,1);
 $curl->setopt(CURLOPT_URL, $url);
@@ -126,17 +134,17 @@ if ($retcode == 0) {
         my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
         # judge result and next action based on $response_code
         if ( $response_code == 200 ){
-			my @valid = $self->format_body( $response_body );
-			#	print Dumper @valid;
-			return @valid ;
+			my %result = $self->format_body( $response_body, $formatRef, $regex  );
+			return %result ;
 		} else {
-		#TODO  implement exception
-			MyException::InseeCurl->throw( 
+			print "$response_code \n";
+			ExInseeCurl->throw({ 
 				code => $response_code,
-				method => 'getSIRET'
-				 );							
+				method => 'getSiret'
+			} );							
 		} 
 }else {
+		#TODO  implement exception
         # Error code, type of error, error message
 		#    carp("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
 		#}
@@ -145,26 +153,37 @@ if ($retcode == 0) {
 sub format_body {
 	my $self = shift;
 	my $body = shift ;
-	my $regex = '\"periodesEtablissement\":\[\{\"dateFin\":null,\"dateDebut\":\"\d{4}-\d{2}-\d{2}\",\"etatAdministratifEtablissement\":\"A\"';
-	my @valid ;
+	my $formatRef= shift;
+	my $regex = shift;
 	my @etablissement = split( /{"siren":/, $body);
 	shift(@etablissement);
+	my %result;
+	my @valeurs ;my $siret; my  $siren; my  $address ;
 	foreach (@etablissement) {
 		if (m/$regex/){
 			my $data = $_ ;
-			my  $data_reg = '(\"siret\":\"\d{14}\")';
-			my $siret = $self->get_data( $data , $data_reg );
-			$data_reg = '(^\"\d{9}\")'; 
-			my $siren = '"siren":' . $self->get_data( $data , $data_reg );
-			$data_reg = '(\"denominationUniteLegale\":\".*\"),\"sigleUniteLegale\"'; 
-			my $name = $self->get_data( $data , $data_reg );
-			$data_reg = '(\"adresseEtablissement\":\{\".*\}),\"adresse2Etablissement\"'; 
-			my $address = $self->get_data( $data , $data_reg );
-			my $value = "$siret , $siren , $address";
-			push( @valid ,$value );
+			my $key ;
+			my %values ;
+			my $vat ;
+			foreach  $key (keys %$formatRef) {
+				$values{ $key } =  $self->get_data( $data , $formatRef->{$key} );
+			 	
+				if ( $key eq "siren:") {
+					 $siren = $values{ $key };
+					 $siren =~ s/^.//s;
+					 $vat = $self->get_vat( $siren ) ;
+				} elsif ( $key eq "adressEtablissement:") {
+					 $address = $values{ $key };
+				};
+				
+				#				print "debug : $key\t$values{ $key }\n";
+			}
+			my $val = "\t$siren\t$vat\t$address";
+			$result{ $values{"siret:"} } = $val ;
+			
 		}	
 	}
-	return @valid ;
+	return %result ;
 }
 sub get_data {
 	my $self = shift ;
@@ -174,4 +193,15 @@ sub get_data {
 		return  $1; 
 	}
 }
+
+sub get_vat {
+	my $self = shift ;
+	my $siren = shift ;
+	#	my $modulo ;
+	my $modulo = (12 + ( 3 * ( $siren % 97)) %97) ;
+	my $vat = "FR$modulo$siren" ;
+	return $vat ;
+		}
+
 1;
+}
