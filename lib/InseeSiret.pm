@@ -1,5 +1,5 @@
 package InseeSiret {
-use Modern::Perl ;
+ use Modern::Perl ;
  use Carp;
  use WWW::Curl::Easy;
  use Moose;
@@ -100,12 +100,12 @@ if ($retcode == 0) {
 
 
 
-sub getSiret {
+sub response {
 my $self = shift;
 my $siren = shift ;
-my $regex = shift;
-my $formatRef = shift;
 my $date = $self->date ;
+# A check should be done on the SIREN number
+#
 my $query = "siren:$siren&date=$date";
 # &periode(etatAdministratifEtablissement:A)
 my $url = "https://api.insee.fr/entreprises/sirene/V3/siret?q=";
@@ -134,8 +134,9 @@ if ($retcode == 0) {
         my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
         # judge result and next action based on $response_code
         if ( $response_code == 200 ){
-			my %result = $self->format_body( $response_body, $formatRef, $regex  );
-			return %result ;
+			#			my %result = $self->format_body( $response_body, $formatRef, $regex, $siren  );
+			# 
+			return $response_body ;
 		} else {
 			print "$response_code \n";
 			ExInseeCurl->throw({ 
@@ -150,58 +151,12 @@ if ($retcode == 0) {
 		#}
 }
 }
-sub format_body {
-	my $self = shift;
-	my $body = shift ;
-	my $formatRef= shift;
-	my $regex = shift;
-	my @etablissement = split( /{"siren":/, $body);
-	shift(@etablissement);
-	my %result;
-	my @valeurs ;my $siret; my  $siren; my  $address ;
-	foreach (@etablissement) {
-		if (m/$regex/){
-			my $data = $_ ;
-			my $key ;
-			my %values ;
-			my $vat ;
-			foreach  $key (keys %$formatRef) {
-				$values{ $key } =  $self->get_data( $data , $formatRef->{$key} );
-			 	
-				if ( $key eq "siren:") {
-					 $siren = $values{ $key };
-					 $siren =~ s/^.//s;
-					 $vat = $self->get_vat( $siren ) ;
-				} elsif ( $key eq "adressEtablissement:") {
-					 $address = $values{ $key };
-				};
-				
-				#				print "debug : $key\t$values{ $key }\n";
-			}
-			my $val = "\t$siren\t$vat\t$address";
-			$result{ $values{"siret:"} } = $val ;
-			
-		}	
-	}
-	return %result ;
-}
-sub get_data {
-	my $self = shift ;
-	my $data = shift ;
-	my $regex = shift ;
-	if ( $data =~ /$regex/ ){
-		return  $1; 
-	}
-}
 
 sub get_vat {
-	my $self = shift ;
-	my $siren = shift ;
-	#	my $modulo ;
+	my ($self, $siren ) = @_ ;
 	my $modulo = (12 + ( 3 * ( $siren % 97)) %97) ;
 	my $vat = "FR$modulo$siren" ;
 	return $vat ;
 		}
-
 1;
 }

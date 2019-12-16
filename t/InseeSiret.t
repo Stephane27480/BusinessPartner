@@ -29,11 +29,11 @@ ok $token, "Token: $token";
 
 # test get the siret from SIREN
 my $siren = '432673838';
-my $sirets = $class->getSiret( $siren );
-ok $sirets, "Siret devrait être rempli";
-print $sirets ;
-# test date
-
-done_testing();
-
-
+my $dataRef = $class->response( $siren );
+my $data = $dataRef ;
+ok $data, "la réponse devrait être remplie";
+print "$data\n" ;
+# write in a file
+open my($out), '>', "./../temp/response.txt";
+	print $out $data;
+close $out;

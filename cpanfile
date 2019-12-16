@@ -12,3 +12,5 @@ requires 'MongoDB';
 requires 'WWW::Curl::Easy' ;
 requires 'Exception::Class' ;
 requires 'Throwable' ;
+requires 'Try::Tiny' ;
+requires 'XML::XML2JSON' ;

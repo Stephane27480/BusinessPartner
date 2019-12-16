@@ -1,7 +1,4 @@
-package InseeCurl ;
-=pod
-=encoding UTF-8
-=cut
+package ExInseeCurl { 
 #
 #===============================================================================
 #
@@ -23,4 +20,5 @@ with 'Throwable';
 has code => (is => 'ro');
 has method => (is => 'ro');
 1;
+}
 
