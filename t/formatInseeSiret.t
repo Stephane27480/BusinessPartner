@@ -24,12 +24,8 @@ $class->get_header( );
 my $header = $class->header;
 ok $header, "Header : $header\n";
 
-my %format ;
-	 $format{"siret:"} = '\"siret\":\"(\d{14})\"' ;
-	$format{"siren:"} = '(^\"\d{9})\"' ;
-	$format{"adressEtablissement:"} = '\"adresseEtablissement\":(\{\".*\}),\"adresse2Etablissement\"' ;
 my $regex = '\"periodesEtablissement\":\[\{\"dateFin\":null,\"dateDebut\":\"\d{4}-\d{2}-\d{2}\",\"etatAdministratifEtablissement\":\"A\"';
- $class->get_etablissement( \%format,  $regex );
+ $class->get_etablissement( $regex );
 my $body = $class->body ;
 ok $body, "BODY : $body \n";
 
