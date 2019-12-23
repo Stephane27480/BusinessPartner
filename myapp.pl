@@ -70,14 +70,14 @@ get '/vies' => sub {
 		if (defined $datvies) {
 			$c->render(json => $datvies );
 		} else {
-			if ($vies->errorCode < 17 ) {
+			if ($vies->{errorCode} < 17 ) {
 				$c->res->code(400);
-			} elsif ( $vies->errorCode < 257 ) {
+			} elsif ( $vies->{errorCode} < 257 ) {
 				$c->res->code( 503 );
 			} else {
 				$c->res->code( 500) ;
 			}
-			$c->res->message(" $vies->errorCode : $vies->errorText ") ;
+			$c->res->message(" $vies->{errorCode} : $vies->{errorText} ") ;
 			$c->render( text => $c->res->message );
 		}
 	} else {

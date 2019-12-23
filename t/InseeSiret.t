@@ -5,7 +5,7 @@ use warnings;
 use InseeSiret ;
 use Test::More tests => 6;
 use Moose;
-
+use Mojo::Util qw(dumper);
  # Test instanciation 
 my $user = "INSEE27480";
 my $consKey = "7z6CyvFaIzyH1WC4NX06zUIg3j8a";
@@ -35,5 +35,5 @@ ok $data, "la réponse devrait être remplie";
 #print "$data\n" ;
 # write in a file
 open my($out), '>', "./../temp/response.txt";
-	print $out $data;
+	print $out  $data ;
 close $out;

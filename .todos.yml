@@ -12,11 +12,20 @@ todos:
   description: Faire un fichier de creation et un de suppression
   marked: false
   id: 0
-- title: Mettre la méthode getSIRET en plus générique
-  description: Permettre plusieurs format de sortie en modularisant plus
+- title: 'Méthode format : quand regex = null'
+  description: Faire un traitement afin de traiter le cas ou l'on souhaite tout prendre
   marked: false
   id: 0
-- title: Ajout de pod dans les modules
-  description: Ajouter la documentation dans les modules
+- title: Faire une application
+  description: Pour pouvoir montrer quelque chose
+  marked: false
+  id: 0
+- title: Faire mapping
+  description: Faire le mapping pour les valeurs sap
+  marked: false
+  id: 0
+- title: Format de sortie
+  description: faire un format JSON et un format XML plus tard voir pour un format
+    csv ou tab separated
   marked: false
   id: 0

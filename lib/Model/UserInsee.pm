@@ -20,7 +20,7 @@ use Modern::Perl '2018';
 #use Mojo::Util 'secure_compare';
 
 my $USERS = {
-  sbl      => ("INSEE27480","7z6CyvFaIzyH1WC4NX06zUIg3j8a","N2FYCzsyOl3qZJwvf_WeWiMIKzga"),
+  sbl      => ['INSEE27480','7z6CyvFaIzyH1WC4NX06zUIg3j8a','N2FYCzsyOl3qZJwvf_WeWiMIKzga'],
   marcus    => ( 'user','consKey', 'secKey'),
   sebastian =>  ( 'user','consKey', 'secKey')
 };
@@ -32,7 +32,8 @@ sub check {
 
   # Success
 	if (defined $USERS->{$user} ) {
-		my @insee = $USERS->{$user} ;
+		my $inseeRef = $USERS->{$user} ;
+		my @insee = @$inseeRef;
 		return @insee;
 	} else{
   		# Fail

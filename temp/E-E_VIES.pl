@@ -5,7 +5,7 @@ my $hvatn=Business::Tax::VAT::Validation->new();
 #$hvatn=Business::Tax::VAT::Validation->new(-proxy => ['http', 'http://example.com:8001/']);
 
 # Check number
-$VAT = "FR45432261790" ;
+$VAT = "FR21432673838";
 #$VAT = "FR4532261790" ;
 $cc = substr($VAT, 0,2);
  @ms=$hvatn->member_states;
