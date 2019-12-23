@@ -4,7 +4,8 @@
  use warnings;
  use Moose;
  use formatInseeSiret;
- use Test::More tests => 4;
+ use Mojo::Util qw(dumper);
+ use Test::More tests => 3;
 
  # Test instanciation
  my $data ;
@@ -17,18 +18,12 @@ close IN;
 my $class = formatInseeSiret->new( data => $data );
 ok $class, "Class Instanciée";
 
-my $siren = $class->get_value( $data, 'siren', ',' );
-ok $siren, "SIREN : $siren\n";
+my $data2 = $class->main( );
+#print " $data2 \n"  ;
+ok $data2, "JSON received"; 
 
-$class->get_header( );
-my $header = $class->header;
-ok $header, "Header : $header\n";
-
-my $regex = '\"periodesEtablissement\":\[\{\"dateFin\":null,\"dateDebut\":\"\d{4}-\d{2}-\d{2}\",\"etatAdministratifEtablissement\":\"A\"';
- $class->get_etablissement( $regex );
-my $body = $class->body ;
-ok $body, "BODY : $body \n";
-
+my $siren = $class->siren;
+ok $siren, "SIREN : $siren";
 
 done_testing();
 

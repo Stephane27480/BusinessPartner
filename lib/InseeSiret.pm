@@ -1,14 +1,14 @@
 package InseeSiret {
  use Modern::Perl ;
  use Carp;
- use WWW::Curl::Easy;
  use Moose;
  use POSIX qw(strftime);
- use Data::Dumper;
  use FindBin;
  use lib "$FindBin::Bin/./";
  use ExInseeCurl;
-
+ use Mojolicious;
+ use Mojo::Util qw(dumper);
+ use Mojo::JSON qw(decode_json);
 =pod
 
 =head1 Class InseeSiret.pm
@@ -48,48 +48,29 @@ package InseeSiret {
 =cut
 
 sub get_token {
-my  $self = shift ;
-my $url = "https://api.insee.fr/token";
-my $curl = WWW::Curl::Easy->new;
-my $param= "grant_type=client_credentials&validity_period=604800";
+	my $self = shift ;
+	my $url = Mojo::URL->new("https://api.insee.fr/token")
+                    ->userinfo( join ':', $self->consKey, $self->secKey );				 
+	my $ua = Mojo::UserAgent->new;
+	my $tx = $ua->build_tx( POST=> $url);			 
+	$tx->req->body('grant_type=client_credentials&validity_period=604800',);
 
-$curl->setopt(CURLOPT_HEADER,1);
-$curl->setopt(CURLOPT_URL, $url);
-$curl->setopt(CURLOPT_CUSTOMREQUEST, "POST");
-$curl->setopt(CURLOPT_POSTFIELDS, $param );
+	#do the transaction
+	$ua->start($tx);
 
-$curl->setopt(CURLOPT_USERNAME, $self->consKey );
-$curl->setopt(CURLOPT_PASSWORD, $self->secKey );
-# A filehandle, reference to a scalar or reference to a typeglob can be used here.
-my $response_body;
-$curl->setopt(CURLOPT_WRITEDATA,\$response_body);
-# Starts the actual request
-my $retcode = $curl->perform;
-
-# Looking at the results...
-if ($retcode == 0) {
-        my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
-        # judge result and next action based on $response_code
-		if ( $response_code == 200 ){
-        	my ( $responseNew ) = $response_body =~ /"access_token":"(\S*)","scope/ ;
-			$self->_set_token( $responseNew);
-		} else {	
-			print "$response_code \n";
-			ExInseeCurl->throw({ 
-				code => $response_code,
-				method => 'revoke_Token'
-			} );							
+	# Looking at the results...
+		# judge result and next action based on $response_code
+		if ( $tx->result->code == 200 ){
+        	my $respData = decode_json( $tx->result->body );
+			$self->_set_token($respData->{"access_token"} );
+			} else {	
+				print "$tx->result->code \n";
+				ExInseeCurl->throw({ 
+					code => "$tx->result->code",
+					method => 'revoke_token',
+				} );							
+			}
 		}
-        my ( $responseNew ) = $response_body =~ /"access_token":"(\S*)","scope/ ;
-#        print "\n $responseNew \n";
-		$self->_set_token( $responseNew);
-	} else {
-        # Error code, type of error, error message
-		#TODO implement exception
-        print("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
-	}
-}
-
 =pod
 
 =head1 revoke_token
@@ -98,44 +79,27 @@ if ($retcode == 0) {
 =cut
 
 sub revoke_token {
-my $self = shift ;
-my $url = "https://api.insee.fr/revoke";
-my $curl = WWW::Curl::Easy->new;
-my $token = $self->token ;
-my $user = $self->user;
-my $consKey = $self->consKey;
-my $secKey = $self->secKey;
-my $param= "token={$token}";
+	my $self = shift ;
+	my $url = Mojo::URL->new("https://api.insee.fr/revoke")
+                    ->userinfo( join ':', $self->consKey, $self->secKey );				 
+	my $ua = Mojo::UserAgent->new;
+	my $tx = $ua->build_tx( POST=> $url);			 
+	$tx->req->body("token={ $self->{token} }",);
 
-$curl->setopt(CURLOPT_HEADER,1);
-$curl->setopt(CURLOPT_URL, $url);
-$curl->setopt(CURLOPT_CUSTOMREQUEST, "POST");
-$curl->setopt(CURLOPT_POSTFIELDS, $param );
+	#do the transaction
+	$ua->start($tx);
 
-$curl->setopt(CURLOPT_USERNAME, $consKey );
-$curl->setopt(CURLOPT_PASSWORD, $secKey );
-my $response_body;
-$curl->setopt(CURLOPT_WRITEDATA,\$response_body);
-# Starts the actual request
-my $retcode = $curl->perform;
-
-# Looking at the results...
-if ($retcode == 0) {
-        my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
-        # judge result and next action based on $response_code
-        if ( $response_code != 200 ){
-			print "$response_code \n";
+	# Looking at the results...
+		# judge result and next action based on $response_code
+		if ( $tx->result->code != 200 ){
+	
+			print $tx->result->code . "\n";
 			ExInseeCurl->throw({ 
-				code => $response_code,
+				code => $tx->result->code,
 				method => 'get_Token'
-			} );							
-		}
-	} else {
-		#TODO implement exception
-        # Error code, type of error, error message
-        carp("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
+				} );							
+			}
 	}
-}
 
 =pod
 
@@ -159,68 +123,35 @@ sub response {
 	my $self = shift;
 	my $siren = shift ;
 	my $date = $self->date ;
-# A check should be done on the SIREN number
-#
-	my $query = "siren:$siren&date=$date";
-# &periode(etatAdministratifEtablissement:A)
-	my $url = "https://api.insee.fr/entreprises/sirene/V3/siret?q=";
-	$url .= $query ;
-	my $curl = WWW::Curl::Easy->new;
-	my $token = $self->token;
-	my @headers = ("Accept: application/json","Authorization: Bearer $token");
-	$curl->setopt(CURLOPT_HEADER,1);
-	$curl->setopt(CURLOPT_URL, $url);
-	$curl->setopt(CURLOPT_CUSTOMREQUEST, "GET");
-	$curl->setopt(CURLOPT_HTTPGET, 1 );
-	$curl->setopt(CURLOPT_HTTPHEADER, \@headers);
-# A filehandle, reference to a scalar or reference to a typeglob can be used here.
-	my $response_body;
-	$curl->setopt(CURLOPT_WRITEDATA,\$response_body);
-# Starts the actual request
-	my $retcode = $curl->perform;
-# Looking at the results...
-	if ($retcode == 0) {
-    	    my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
-        	# judge result and next action based on $response_code
-        	if ( $response_code == 200 ){
-				#			my %result = $self->format_body( $response_body, $formatRef, $regex, $siren  );
-				# 
-				return $response_body ;
+	#Create the parameters
+	#Take only the siret that have never been closed
+	my $params = "/siret?q=siren:$siren AND -periode(etatAdministratifEtablissement:F)&date=$date";
+	my $uri = "https://api.insee.fr/entreprises/sirene/V3" . $params;
+	my $url = Mojo::URL->new("$uri");
+	
+	my $ua = Mojo::UserAgent->new;
+	my $tx = $ua->build_tx( GET => $url);			 
+
+	# create the header
+	$tx->req->headers->accept('application/json');
+	$tx->req->headers->authorization("Bearer $self->{token}");
+
+	#do the transaction
+	$ua->start($tx);
+
+		if ( $tx->result->code == 200 ){
+				my $respData =  $tx->result->body ;
+				# say dumper( $respData );
+				return $respData ;
 			} else {
-				print "$response_code \n";
+				#	say $tx->res->to_string;
+				print  $tx->result->code . "\n";
 				ExInseeCurl->throw({ 
-					code => $response_code,
+					code => $tx->result->code,
 					method => 'getSiret'
 				} );							
 			} 
-		}else {
-		#TODO  implement exception
-        # Error code, type of error, error message
-		#    carp("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
-		#}
-		}
 	}
 
-=pod	
-
-=head1 Method get_vat
-	This method calculates the VAT number from the SIREN
-
-=head2 Attributes
-
-=over 2
-
-=item C<$siren> siren number
-
-=back	
-
-=cut
-
-sub get_vat {
-	my ($self, $siren ) = @_ ;
-	my $modulo = (12 + ( 3 * ( $siren % 97)) %97) ;
-	my $vat = "FR$modulo$siren" ;
-	return $vat ;
-		}
 1;
 }

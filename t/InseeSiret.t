@@ -1,8 +1,8 @@
- use strict;
- use FindBin;
- use lib "$FindBin::Bin/../lib";
- use warnings;
- use InseeSiret ;
+use strict;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use warnings;
+use InseeSiret ;
 use Test::More tests => 6;
 use Moose;
 
@@ -29,10 +29,10 @@ ok $token, "Token: $token";
 
 # test get the siret from SIREN
 my $siren = '432673838';
-my $dataRef = $class->response( $siren );
-my $data = $dataRef ;
+my $data = $class->response( $siren );
+#my $data = $dataRef ;
 ok $data, "la réponse devrait être remplie";
-print "$data\n" ;
+#print "$data\n" ;
 # write in a file
 open my($out), '>', "./../temp/response.txt";
 	print $out $data;

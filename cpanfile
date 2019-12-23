@@ -1,16 +1,12 @@
 requires 'Modern::Perl';
-requires 'Plack';
-requires 'Plack::Test';
-requires 'Dancer2';
-requires 'REST::Client' ;
-requires 'HTTP::Request::Common ;
+requires 'Mojolicious' ;
 requires 'Moose' ;
 requires 'Business::Tax::VAT::Validation';
 requires 'DBI';
 requires 'DBD::Pg' ;
 requires 'MongoDB';
-requires 'WWW::Curl::Easy' ;
 requires 'Exception::Class' ;
 requires 'Throwable' ;
 requires 'Try::Tiny' ;
+requires 'Cpanel::JSON::XS' ;
 requires 'XML::XML2JSON' ;
