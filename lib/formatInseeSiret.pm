@@ -61,7 +61,7 @@ sub get_etablissement {
 	}
 	
 
-	return %etab;
+	return \%etab;
 	}
 
 sub get_vat {
