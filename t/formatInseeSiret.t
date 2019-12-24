@@ -19,7 +19,9 @@ my $class = formatInseeSiret->new( data => $data );
 ok $class, "Class Instanciée";
 
 my $data2 = $class->main( );
-#print " $data2 \n"  ;
+open OUT, '>', "./../temp/json.txt";
+print OUT   $data2  ;
+close OUT;
 ok $data2, "JSON received"; 
 
 my $siren = $class->siren;

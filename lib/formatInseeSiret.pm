@@ -42,17 +42,27 @@ sub get_etablissement {
 	my %etab;
 	# get the siret
 	my $descr = "siret";
-	$etab{"$descr"} = $etabRef->{$descr};
+	$etab{$descr} = $etabRef->{$descr};
 	# get the status for header quaters
 	$descr = "etablissementSiege";
-	$etab{"$descr"} = $etabRef->{$descr};
+	$etab{$descr} = $etabRef->{$descr};
 	# Get the Address
 	$descr = "adresseEtablissement"; 
-	$etab{"$descr"} = $etabRef->{$descr};
+	$etab{$descr} = $etabRef->{$descr};
+	# Get the data from the periodes etablissement
+	 $descr = "periodesEtablissement";
+	my $periodesRef = $etabRef->{$descr};
+	foreach my $periode (@$periodesRef) {
+
+		if (!defined $periode->{"dateFin"}) {
+			$descr = "activitePrincipaleEtablissement";
+			$etab{$descr} = $periode->{$descr}; 
+		}
+	}
+	
 
 	return %etab;
 	}
-
 
 sub get_vat {
 	my ($self, $siren) = @_ ;
@@ -112,7 +122,10 @@ sub get_header {
 		}
 	# Get the company category
 	$descr = "categorieEntreprise";  
-	$header{"$descr"} = $ulRef->{$descr};
+	$header{$descr} = $ulRef->{$descr};
+	$descr = "activitePrincipaleUniteLegale";
+	$header{$descr} = $ulRef->{$descr};
+
 	return %header;
 	}
 
@@ -130,6 +143,7 @@ sub main {
 	my %header;
 	my @body;
 	my $dataRef = decode_json( $self->data  ); 
+	# Get the data from the etablissements 
 	my $etabRef = $dataRef->{etablissements};	
 	foreach my $etab (@$etabRef) {
 		if (!defined $self->siren) {
@@ -137,6 +151,7 @@ sub main {
 		}
 			push (@body, $self->get_etablissement( $etab ));
 	}
+
 	$header{"etablissements"} = \@body;	 
 	
 	my $dataJSON = encode_json(\%header);
