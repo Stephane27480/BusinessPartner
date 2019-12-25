@@ -25,8 +25,6 @@ use Model::UserInsee;
 use appSiren ;
 use appVies ;
 
-#changing the port
-app->config(hypnotoad => {listen => ['http://*80']});
 
 #Helper to lazy initialize and store model object
 helper users => sub {state $users = Model::Users->new};
