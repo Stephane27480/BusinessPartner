@@ -9,4 +9,3 @@ requires 'Exception::Class';
 requires 'Throwable';
 requires 'Try::Tiny';
 requires 'Cpanel::JSON::XS';
-requires 'XML::XML2JSON';
