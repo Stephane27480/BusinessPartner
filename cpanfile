@@ -1,5 +1,6 @@
 requires 'Modern::Perl';
 requires 'Mojolicious' ;
+requires 'Mojolicious::Lite';
 requires 'Moose';
 requires 'Business::Tax::VAT::Validation';
 requires 'DBI';
