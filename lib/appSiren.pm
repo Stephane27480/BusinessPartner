@@ -21,7 +21,6 @@ use FindBin;
 use lib "$FindBin::Bin/./";
 use InseeSiret ;
 use formatInseeSiret;
-use XML::XML2JSON;
 
 # Attributes
 has 'user' , is => 'ro', isa => 'Str';
