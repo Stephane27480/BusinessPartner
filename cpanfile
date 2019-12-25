@@ -10,3 +10,6 @@ requires 'Exception::Class';
 requires 'Throwable';
 requires 'Try::Tiny';
 requires 'Cpanel::JSON::XS';
+requires 'IO::Socket::SSL';
+requires "Mojolicious::Plugin::JSON::XS";
+requires "Mojo::IOLoop::ReadWriteFork";
