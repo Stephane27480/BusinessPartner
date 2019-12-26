@@ -10,5 +10,5 @@ requires 'Exception::Class';
 requires 'Throwable';
 requires 'Try::Tiny';
 requires 'Cpanel::JSON::XS';
-requires "Mojolicious::Plugin::JSON::XS";
-requires "Mojo::IOLoop::ReadWriteFork";
+requires 'Mojolicious::Plugin::JSON::XS';
+requires 'Mojo::IOLoop::ReadWriteFork';
