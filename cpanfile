@@ -4,7 +4,6 @@ requires 'Mojolicious::Lite';
 requires 'Moose';
 requires 'Business::Tax::VAT::Validation';
 requires 'DBI';
-requires 'DBD::Pg';
 requires 'MongoDB';
 requires 'Exception::Class';
 requires 'Throwable';
