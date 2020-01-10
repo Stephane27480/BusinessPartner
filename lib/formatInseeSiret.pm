@@ -56,7 +56,7 @@ sub get_etablissement {
 
 		if (!defined $periode->{"dateFin"}) {
 			$descr = "activitePrincipaleEtablissement";
-			$etab{$descr} = $periode->{$descr}; 
+			$etab{"activitePrincipale"} = $periode->{$descr}; 
 		}
 	}
 	
@@ -101,7 +101,7 @@ sub get_header {
 	my $ulRef = $etabRef->{uniteLegale};
 	# get the category of the company 1000=> personal
 	my $categ = $ulRef->{categorieJuridiqueUniteLegale}; 
-	
+		$header{"categorieJuridique"} = $categ;	
 		if ($categ ne '1000') {
 			# company
 			$descr = "denominationUniteLegale";  
@@ -124,12 +124,10 @@ sub get_header {
 	$descr = "categorieEntreprise";  
 	$header{$descr} = $ulRef->{$descr};
 	$descr = "activitePrincipaleUniteLegale";
-	$header{$descr} = $ulRef->{$descr};
+	$header{"activitePrincipale"} = $ulRef->{$descr};
 
 	return %header;
 	}
-
-=pod
 
 =head1 Method main
 	This method calls the get_header method
