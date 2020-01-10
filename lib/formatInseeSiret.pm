@@ -8,7 +8,7 @@ use Modern::Perl ;
  use FindBin;
  use lib "$FindBin::Bin/./";
  use vies;
-
+ use Data::Dumper;
 =pod 
 
 =head1 formatInseeSiret
@@ -48,6 +48,12 @@ sub get_etablissement {
 	$etab{$descr} = $etabRef->{$descr};
 	# Get the Address
 	$descr = "adresseEtablissement"; 
+	$etabRef->{$descr}{'libellePaysEtranger'} = $etabRef->{$descr}{'libellePaysEtrangerEtablissement'} ;
+	$etabRef->{$descr}{'distributionSpeciale'} = $etabRef->{$descr}{'distributionSpecialeEtablissement'} ;
+	$etabRef->{$descr}{'libelleCommuneEtranger'} = $etabRef->{$descr}{'libelleCommuneEtrangerEtablissement'} ;
+	delete $etabRef->{$descr}->{'libellePaysEtrangerEtablissement'};
+	delete $etabRef->{$descr}->{'distributionSpecialeEtablissement'} ;
+	delete $etabRef->{$descr}->{'libelleCommuneEtrangerEtablissement'} ;
 	$etab{$descr} = $etabRef->{$descr};
 	# Get the data from the periodes etablissement
 	 $descr = "periodesEtablissement";
