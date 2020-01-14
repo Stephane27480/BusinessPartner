@@ -40,7 +40,11 @@ sub main {
   }
 	$self->errorCode( $class->{errorCode});
 	$self->errorText( $class->{errorText});
-  return undef;
+   my %info;
+   $info{"errorCode"} = $self->errorCode;
+   $info{"errorText"} = $self->errorText ;
+   my $data = encode_json( \%info );
+	return $data;
 }
 
 1;
