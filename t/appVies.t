@@ -14,7 +14,7 @@ ok $class, "Class Instanciée";
 
 my $data = $class->main( );
 ok $data, "Member State : $data\n";
- my $vat = "FR81499454478" ;
+  $vat = "FR81499454478" ;
 
  $class = appVies->new( vat => $vat  );
 ok $class, "Class Instanciée";
