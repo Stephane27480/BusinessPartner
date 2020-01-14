@@ -30,10 +30,10 @@ has 'errorText', is => 'rw', isa => 'Str';
 sub main {
 	my $self = shift;
  	my $class = vies->new( vat => $self->vat );
-	my %info;
 	if (defined $class->main( ) ){
 	  my $infoRef = $class->get_info( );
-	  my %info = ($self->vat => $infoRef );
+	  my %info = %$infoRef ;
+	  $info{"vat"} = $self->vat;
 	  my $data = encode_json( \%info );	
 	return $data ;
   			
