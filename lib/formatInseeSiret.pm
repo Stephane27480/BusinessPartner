@@ -72,7 +72,8 @@ sub get_etablissement {
 
 sub get_vat {
 	my ($self, $siren) = @_ ;
-	my $modulo = (12 + ( 3 * ( $siren % 97)) %97) ;
+	my $modulo = ((12 + ( 3 * ( $siren % 97))) %97) ;
+	if ( length( $modulo ) ne 2){ $modulo = 0 . $modulo; }
 	my $vat = "FR$modulo$siren" ;
 	my $vies = vies->new( vat => $vat );
 	$vat = $vies->main( );
