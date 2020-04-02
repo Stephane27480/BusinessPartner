@@ -28,7 +28,7 @@ my $token = $class->get_token ;
 ok $token, "Token: $token";
 
 # test get the siret from SIREN
-my $siren = '432673838';
+my $siren = '552081317'; #'432673838';
 my $data = $class->response( $siren );
 #my $data = $dataRef ;
 ok $data, "la réponse devrait être remplie";

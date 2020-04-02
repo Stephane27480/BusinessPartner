@@ -125,7 +125,7 @@ sub response {
 	my $date = $self->date ;
 	#Create the parameters
 	#Take only the siret that have never been closed
-	my $params = "/siret?q=siren:$siren AND -periode(etatAdministratifEtablissement:F)&date=$date";
+	my $params = "/siret?q=siren:$siren AND -periode(etatAdministratifEtablissement:F)&date=$date&nombre=1000";
 	my $uri = "https://api.insee.fr/entreprises/sirene/V3" . $params;
 	my $url = Mojo::URL->new("$uri");
 	

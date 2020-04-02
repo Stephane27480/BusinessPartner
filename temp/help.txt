@@ -1,2 +1,16 @@
 curl -u sbl:27480 127.0.0.1:3000/siren/?siren=432673838
 curl -u sbl:27480 127.0.0.1:3000/vies/?vat=FR21432673838
+
+curl -u sbl:27480 127.0.0.1:8080/siren/?siren=432673838
+curl -u sbl:27480 127.0.0.1:8080/vies/?vat=FR21432673838
+
+https://api.cf.eu10.hana.ondemand.com
+
+curl -u sbl:27480 sirenv1.cfapps.eu10.hana.ondemand.com/siren/?siren=432673838:q
+
+
+docker build -t sbl27480/siren_v1 .
+docker run --name=SIREN -it --rm -p 8080:8080 sbl27480/siren_v1
+
+mordo ./myapp.pl
+
