@@ -125,13 +125,21 @@ sub response {
 	my $date = $self->date ;
 	#Create the parameters
 	#Take only the siret that have never been closed
-	my $params = "/siret?q=siren:$siren AND -periode(etatAdministratifEtablissement:F)&date=$date&nombre=1000";
+	my $respData ;
+	my $exit ;
+	my $control = 'C'; #C= Continue E Exit
+	my $curseur = '*';
+	my $curseurTemp;
+
+	while ( $control eq 'C' ){
+	my $params = "/siret?q=siren:$siren AND -periode(etatAdministratifEtablissement:F)&date=$date&curseur=$curseur&nombre=1000";
 	my $uri = "https://api.insee.fr/entreprises/sirene/V3" . $params;
 	my $url = Mojo::URL->new("$uri");
 	
 	my $ua = Mojo::UserAgent->new;
 	my $tx = $ua->build_tx( GET => $url);			 
-
+	$curseurTemp = ();
+	
 	# create the header
 	$tx->req->headers->accept('application/json');
 	$tx->req->headers->authorization("Bearer $self->{token}");
@@ -140,9 +148,27 @@ sub response {
 	$ua->start($tx);
 
 		if ( $tx->result->code == 200 ){
-				my $respData =  $tx->result->body ;
+			# my $total = $tx->result->total ;			
+				my $respDataTemp =  $tx->result->body ;
 				# say dumper( $respData );
-				return $respData ;
+				 ($control, $curseurTemp ) = $self->analyseResponse( $respDataTemp );
+				if (($curseur eq '*') and ( $control eq 'E')) {
+					$respData = $respDataTemp;
+				}elsif (( $curseur ne '*') and ($control eq 'E')) {
+					$respDataTemp =~ s/^\{"header.*etablissements"\[/,/ ;
+				 	$respData .= $respDataTemp ;
+					return $respData ;
+				}elsif (($curseur eq '*') and ($control eq 'C')) {
+					$curseur = $curseurTemp;
+					$respDataTemp =~ s/\]\}$//;
+					$respData .= $respDataTemp ;
+				}else{
+					$curseur = $curseurTemp;
+					$respDataTemp =~ s/^\{"header.*etablissements"\[/,/;
+                    $respDataTemp =~ s/\]\}$//;
+                    $respData .=  $respDataTemp ;
+				}
+				
 			} else {
 				#	say $tx->res->to_string;
 				print  $tx->result->code . "\n";
@@ -152,6 +178,22 @@ sub response {
 				} );							
 			} 
 	}
-
+}
+sub analyseResponse {
+	my $self = shift ;
+	my $dataRaw = shift ;
+	my $dataRef = decode_json( $dataRaw  );
+	my $control ;
+	my $headerRef = $dataRef->{header};
+	if (( $headerRef->{curseur} eq '*' ) and ( $headerRef->{total} <= $headerRef->{nombre} )) {
+		$control = 'E';
+	}elsif ($headerRef->{curseur} eq $headerRef->{curseurSuivant} ) {
+		$control = 'E' ;
+	}else{
+		$control = 'C';
+	}	
+	
+return ($control, $headerRef->{curseurSuivant});
+	}
 1;
 }

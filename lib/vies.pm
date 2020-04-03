@@ -112,7 +112,7 @@ sub check_vat {
 		$ret_val = 0 ; }
 	else {
 		
-			$ret_val = $self->local_check( );
+			$ret_val = 0; #$self->local_check( );
 		}
 	return $ret_val ;		
 }
