@@ -154,18 +154,20 @@ sub response {
 				 ($control, $curseurTemp ) = $self->analyseResponse( $respDataTemp );
 				if (($curseur eq '*') and ( $control eq 'E')) {
 					$respData = $respDataTemp;
+					return $respData ;
 				}elsif (( $curseur ne '*') and ($control eq 'E')) {
-					$respDataTemp =~ s/^\{"header.*etablissements"\[/,/ ;
-				 	$respData .= $respDataTemp ;
+					$respDataTemp =~ s/^\{"header.*?etablissements":\[/,/ ;
+				 	$respData =~ s/\]\}$//;
+					$respData .= $respDataTemp ;
+					$respData =~ s/,\]\}$/\]\}/;
 					return $respData ;
 				}elsif (($curseur eq '*') and ($control eq 'C')) {
 					$curseur = $curseurTemp;
-					$respDataTemp =~ s/\]\}$//;
 					$respData .= $respDataTemp ;
 				}else{
 					$curseur = $curseurTemp;
-					$respDataTemp =~ s/^\{"header.*etablissements"\[/,/;
-                    $respDataTemp =~ s/\]\}$//;
+					$respDataTemp =~ s/^\{"header.*?etablissements":\[/,/;
+                    $respData =~ s/\]\}$//;
                     $respData .=  $respDataTemp ;
 				}
 				
