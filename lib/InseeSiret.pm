@@ -121,7 +121,8 @@ sub revoke_token {
 
 sub response {
 	my $self = shift;
-	my $siren = shift ;
+	#	my $siren = shift ;
+	my $param = shift ;
 	my $date = $self->date ;
 	#Create the parameters
 	#Take only the siret that have never been closed
@@ -132,7 +133,9 @@ sub response {
 	my $curseurTemp;
 
 	while ( $control eq 'C' ){
-	my $params = "/siret?q=siren:$siren AND -periode(etatAdministratifEtablissement:F)&date=$date&curseur=$curseur&nombre=1000";
+	my $compl = " AND -periode(etatAdministratifEtablissement:F)&date=$date&curseur=$curseur&nombre=1000";	
+	my $params = $param . $compl; #"/siret?q=siren:$siren ";
+	print "$params\n";
 	my $uri = "https://api.insee.fr/entreprises/sirene/V3" . $params;
 	my $url = Mojo::URL->new("$uri");
 	

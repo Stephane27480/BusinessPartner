@@ -36,7 +36,22 @@ get '/siren' => sub {
 	my $user = $c->req->url->to_abs->username;
 	my $pass = $c->req->url->to_abs->password;
 	#query parameters
+	my $params ;
 	my $siren = $c->param('siren');	
+	if ($siren) {
+		$params ="/siret?q=siren:$siren ";
+	} elsif ( $c->param('siret') ) {	
+		my $siret = $c->param('siret');
+		$params = "/siret?q=siret:$siret ";
+	} elsif ( $c->param('cp' ) ) {
+			my $name = $c->param('name');
+			my $cp = $c->param('cp')."???";
+			$params = "/siret?q=denominationUniteLegale:$name AND codePostalEtablissement:$cp ";
+		} else {
+			my $name = $c->param('name');
+			$params = "/siret?q=denominationUniteLegale:$name ";
+		}
+
 	# Check password
     if ($c->users->check($user, $pass)) {
 		$c->session(user => $user );
@@ -45,7 +60,7 @@ get '/siren' => sub {
 								user	=>	$Insee[0],
                                	consKey	=>	$Insee[1],
                                	secKey	=>	$Insee[2],
- 								siren	=>	$siren
+ 							    param	=>	$param
 							);
 		my $data = $class->main( );
 		$c->render(json => $data ); 					

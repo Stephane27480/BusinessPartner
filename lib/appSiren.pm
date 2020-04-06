@@ -26,15 +26,17 @@ use formatInseeSiret;
 has 'user' , is => 'ro', isa => 'Str';
 has 'consKey', is => 'ro', isa => 'Str';
 has 'secKey', is => 'ro', isa => 'Str';
-has 'siren', is => 'ro', isa => 'Str';
+has 'param', is => 'ro', isa => 'Str';
 
 sub main {
 	my $self = shift;
+	#	my $params ="/siret?q=siren:$siren ";
+
 	my $classInsee = InseeSiret->new( user => $self->user,
     	        	             consKey => $self->consKey,
         		    	         secKey => $self->secKey );
 	$classInsee->get_token( );
-	my $insee = $classInsee->response($self->siren );
+	my $insee = $classInsee->response( $self->param );
 	my $classFormat = formatInseeSiret->new( data => $insee );						 
 
 	 my $data = $classFormat->main( ); 
