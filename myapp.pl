@@ -60,7 +60,7 @@ get '/siren' => sub {
 								user	=>	$Insee[0],
                                	consKey	=>	$Insee[1],
                                	secKey	=>	$Insee[2],
- 							    param	=>	$param
+ 							    param	=>	$params
 							);
 		my $data = $class->main( );
 		$c->render(json => $data ); 					
