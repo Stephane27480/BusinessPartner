@@ -43,14 +43,14 @@ get '/siren' => sub {
 	} elsif ( $c->param('siret') ) {	
 		my $siret = $c->param('siret');
 		$params = "/siret?q=siret:$siret ";
-	} elsif ( $c->param('cp' ) ) {
-			my $name = $c->param('name');
-			my $cp = $c->param('cp')."???";
-			$params = "/siret?q=denominationUniteLegale:$name AND codePostalEtablissement:$cp ";
-		} else {
+	} elsif ( $c->param('name' ) ) {
 			my $name = $c->param('name');
 			$params = "/siret?q=denominationUniteLegale:$name ";
-		}
+	}
+
+if ( $c->param('cp')){
+	$params .= "AND codePostalEtablissement:$cp ";
+}	
 
 	# Check password
     if ($c->users->check($user, $pass)) {
