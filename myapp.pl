@@ -49,6 +49,7 @@ get '/siren' => sub {
 	}
 
 if ( $c->param('cp')){
+	my $cp = $c->param('cp');
 	$params .= "AND codePostalEtablissement:$cp ";
 }	
 
