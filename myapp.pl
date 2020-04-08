@@ -15,7 +15,7 @@
 #      COMPANY:  
 #      VERSION:  0.10
 #      CREATED:  18/12/2019 09:32:48
-#     REVISION:  ---
+#     REVISION:  001-
 #===============================================================================
 use Modern::Perl '2018';
 use Mojolicious::Lite ;
@@ -49,7 +49,9 @@ get '/siren' => sub {
 	}
 
 if ( $c->param('cp')){
-	my $cp = $c->param('cp') . '???';
+	my $cp = $c->param('cp') ;
+	my $length_cp = 5 - length( $cp) ;
+	$cp .= '?' x $length_cp ;
 	$params .= "AND codePostalEtablissement:$cp ";
 }	
 
