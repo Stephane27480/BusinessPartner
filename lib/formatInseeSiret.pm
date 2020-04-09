@@ -48,12 +48,25 @@ sub get_etablissement {
 	$etab{$descr} = $etabRef->{$descr};
 	# Get the Address
 	$descr = "adresseEtablissement"; 
-	$etabRef->{$descr}{'libellePaysEtranger'} = $etabRef->{$descr}{'libellePaysEtrangerEtablissement'} ;
-	$etabRef->{$descr}{'distributionSpeciale'} = $etabRef->{$descr}{'distributionSpecialeEtablissement'} ;
-	$etabRef->{$descr}{'libelleCommuneEtranger'} = $etabRef->{$descr}{'libelleCommuneEtrangerEtablissement'} ;
-	delete $etabRef->{$descr}->{'libellePaysEtrangerEtablissement'};
-	delete $etabRef->{$descr}->{'distributionSpecialeEtablissement'} ;
-	delete $etabRef->{$descr}->{'libelleCommuneEtrangerEtablissement'} ;
+	# Get Unite Legale
+	my $ulRef = $etabRef->{uniteLegale};
+	
+	# get the category of the company 1000=> personal
+	my $categ = $ulRef->{categorieJuridiqueUniteLegale}; 
+		if ($categ ne '1000') {
+			# company
+			$etabRef->{$descr}{name} = $ulRef->{denominationUniteLegale};
+			
+		} else {
+			# personal company
+			$etabRef->{$descr}{name} = $ulRef->{nomUniteLegale};
+		}
+	$etabRef->{$descr}{libellePaysEtranger} = $etabRef->{$descr}{libellePaysEtrangerEtablissement} ;
+	$etabRef->{$descr}{distributionSpeciale} = $etabRef->{$descr}{distributionSpecialeEtablissement} ;
+	$etabRef->{$descr}{libelleCommuneEtranger} = $etabRef->{$descr}{libelleCommuneEtrangerEtablissement} ;
+	delete $etabRef->{$descr}->{libellePaysEtrangerEtablissement};
+	delete $etabRef->{$descr}->{distributionSpecialeEtablissement} ;
+	delete $etabRef->{$descr}->{libelleCommuneEtrangerEtablissement} ;
 	$etab{$descr} = $etabRef->{$descr};
 	# Get the data from the periodes etablissement
 	 $descr = "periodesEtablissement";
@@ -62,7 +75,7 @@ sub get_etablissement {
 
 		if (!defined $periode->{"dateFin"}) {
 			$descr = "activitePrincipaleEtablissement";
-			$etab{"activitePrincipale"} = $periode->{$descr}; 
+			$etab{activitePrincipale} = $periode->{$descr}; 
 		}
 	}
 	
@@ -95,12 +108,12 @@ sub get_header {
 	my $siren = $etabRef->{siren};
 	my %header ;
 	$self->_set_siren( $siren );
-	 $header{"siren"} = $siren ;
+	 $header{siren} = $siren ;
 	my $descr;
 	# Get the VAT	
 			my $vat = $self->get_vat( $siren ) ;
 			if (defined $vat ) {
-			 $header{"vat"} = $vat; 
+			 $header{vat} = $vat; 
 			}	
 			
 	# check if personn company or not
@@ -112,26 +125,26 @@ sub get_header {
 		if ($categ ne '1000') {
 			# company
 			$descr = "denominationUniteLegale";  
-			$header{"name"} = $ulRef->{$descr};
+			$header{name} = $ulRef->{$descr};
 			$descr = "denominationUsuelle1UniteLegale";  
-			$header{"name2"} = $ulRef->{$descr};
+			$header{name2} = $ulRef->{$descr};
 			$descr = "denominationUsuelle2UniteLegale";  
-			$header{"name3"} = $ulRef->{$descr};
+			$header{name3} = $ulRef->{$descr};
 			$descr = "denominationUsuelle3UniteLegale";  
-			$header{"name4"} = $ulRef->{$descr};
+			$header{name4} = $ulRef->{$descr};
 
 		} else {
 			# personal company
 			$descr = "nomUniteLegale";  
-			$header{"name"} = $ulRef->{$descr};
+			$header{name} = $ulRef->{$descr};
 			$descr = "nomUsageUniteLegale";  
-			$header{"name2"} = $ulRef->{$descr};
+			$header{name2} = $ulRef->{$descr};
 		}
 	# Get the company category
 	$descr = "categorieEntreprise";  
 	$header{$descr} = $ulRef->{$descr};
 	$descr = "activitePrincipaleUniteLegale";
-	$header{"activitePrincipale"} = $ulRef->{$descr};
+	$header{activitePrincipale} = $ulRef->{$descr};
 
 	return %header;
 	}
@@ -157,7 +170,7 @@ sub main {
 			push (@body, $self->get_etablissement( $etab ));
 	}
 
-	$header{"etablissements"} = \@body;	 
+	$header{etablissements} = \@body;	 
 	
 	my $dataJSON = encode_json(\%header);
 	return $dataJSON ;
