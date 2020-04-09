@@ -10,6 +10,7 @@
  # Test instanciation
  my $data ;
 open IN,  "./../temp/response.txt";
+#open IN,  "./../temp/response_nameionly.txt";
 	while (my $line = <IN>){
 		$data .= $line;
 	}
