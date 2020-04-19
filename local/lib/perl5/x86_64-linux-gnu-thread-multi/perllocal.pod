@@ -1318,3 +1318,355 @@ C<EXE_FILES: >
 
 =back
 
+=head2 Sun Apr 19 19:32:43 2020: C<Module> L<Safe::Isa|Safe::Isa>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.000010>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:32:45 2020: C<Module> L<Hash::MultiValue|Hash::MultiValue>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.16>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:32:45 2020: C<Module> L<HTTP::Thin|HTTP::Thin>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.006>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:32:52 2020: C<Module> L<ExtUtils::Depends|ExtUtils::Depends>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.8000>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:32:55 2020: C<Module> L<B::Hooks::OP::Check|B::Hooks::OP::Check>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.22>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:32:56 2020: C<Module> L<bareword::filehandles|bareword::filehandles>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.007>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:32:59 2020: C<Module> L<indirect|indirect>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.39>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:33:01 2020: C<Module> L<multidimensional|multidimensional>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.014>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:33:01 2020: C<Module> L<strictures|strictures>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.000006>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:33:04 2020: C<Module> L<Exporter::Tiny|Exporter::Tiny>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.002001>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:33:12 2020: C<Module> L<List::MoreUtils::XS|List::MoreUtils::XS>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.428>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:33:13 2020: C<Module> L<List::MoreUtils|List::MoreUtils>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.428>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:33:13 2020: C<Module> L<Data::Perl|Data::Perl>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.002011>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:33:14 2020: C<Module> L<MooX::HandlesVia|MooX::HandlesVia>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.001008>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:33:16 2020: C<Module> L<URI::Escape::XS|URI::Escape::XS>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.14>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Sun Apr 19 19:33:19 2020: C<Module> L<Type::Tiny|Type::Tiny>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.010001>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+

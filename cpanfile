@@ -10,3 +10,4 @@ requires 'Try::Tiny';
 requires 'Cpanel::JSON::XS';
 requires 'Mojolicious::Plugin::JSON::XS';
 requires 'Mojo::IOLoop::ReadWriteFork';
+requires 'Role::REST::Client';
