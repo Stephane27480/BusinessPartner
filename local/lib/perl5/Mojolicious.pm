@@ -59,7 +59,7 @@ has ua        => sub { Mojo::UserAgent->new };
 has validator => sub { Mojolicious::Validator->new };
 
 our $CODENAME = 'Supervillain';
-our $VERSION  = '8.27';
+our $VERSION  = '8.36';
 
 sub BUILD_DYNAMIC {
   my ($class, $method, $dyn_methods) = @_;
@@ -137,7 +137,7 @@ sub handler {
 
   # Dispatcher has to be last in the chain
   ++$self->{dispatch}
-    and $self->hook(around_action   => sub { $_[2]($_[1]) })
+    and $self->hook(around_action   => \&_action)
     and $self->hook(around_dispatch => sub { $_[1]->app->dispatch($_[1]) })
     unless $self->{dispatch};
 
@@ -196,6 +196,14 @@ sub start {
 }
 
 sub startup { }
+
+sub _action {
+  my ($next, $c, $action, $last) = @_;
+  my $val = $action->($c);
+  $val->catch(sub { $c->helpers->reply->exception(shift) })
+    if Scalar::Util::blessed $val && $val->isa('Mojo::Promise');
+  return $val;
+}
 
 sub _die { CORE::die ref $_[0] ? $_[0] : Mojo::Exception->new(shift)->trace }
 
@@ -818,7 +826,7 @@ that have been bundled for internal use.
 
 =head2 Mojolicious Artwork
 
-  Copyright (C) 2010-2019, Sebastian Riedel.
+  Copyright (C) 2010-2020, Sebastian Riedel.
 
 Licensed under the CC-SA License, Version 4.0
 L<http://creativecommons.org/licenses/by-sa/4.0>.
@@ -885,6 +893,8 @@ Current voting members of the core team in alphabetical order:
 
 CandyAngel, C<candyangel@mojolicious.org>
 
+Christopher Rasch-Olsen Raa, C<christopher@mojolicious.org>
+
 Dan Book, C<grinnz@mojolicious.org>
 
 Jan Henning Thorsen, C<batman@mojolicious.org>
@@ -900,8 +910,6 @@ The following members of the core team are currently on hiatus:
 =over 2
 
 Abhijit Menon-Sen, C<ams@cpan.org>
-
-Christopher Rasch-Olsen Raa, C<christopher@mojolicious.org>
 
 Glen Hinkle, C<tempire@cpan.org>
 
@@ -1059,6 +1067,10 @@ Jonathan Yu
 
 Josh Leder
 
+Kamen Naydenov
+
+Karen Etheridge
+
 Kazuhiro Shibuya
 
 Kevin Old
@@ -1084,6 +1096,8 @@ Mark Fowler
 Mark Grimes
 
 Mark Stosberg
+
+Martin McGrath
 
 Marty Tennison
 
@@ -1229,7 +1243,7 @@ Zoffix Znet
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2019, Sebastian Riedel and others.
+Copyright (C) 2008-2020, Sebastian Riedel and others.
 
 This program is free software, you can redistribute it and/or modify it under
 the terms of the Artistic License version 2.0.

@@ -2,11 +2,11 @@ package ojo;
 use Mojo::Base -strict;
 
 use Benchmark qw(timeit timestr :hireswallclock);
-use Mojo::ByteStream 'b';
-use Mojo::Collection 'c';
+use Mojo::ByteStream qw(b);
+use Mojo::Collection qw(c);
 use Mojo::DOM;
-use Mojo::File 'path';
-use Mojo::JSON 'j';
+use Mojo::File qw(path);
+use Mojo::JSON qw(j);
 use Mojo::Util qw(dumper monkey_patch);
 
 # Silent one-liners
@@ -80,7 +80,7 @@ Every L<ojo> one-liner is also a L<Mojolicious::Lite> application.
 On Perl 5.20+ L<subroutine signatures|perlsub/"Signatures"> will be enabled
 automatically.
 
-  $ perl -Mojo -E 'a(sub ($c) { $c->render(text => 'Hello!') })->start' get /
+  $ perl -Mojo -E 'a(sub ($c) { $c->render(text => "Hello!") })->start' get /
 
 If it is not already defined, the C<MOJO_LOG_LEVEL> environment variable will
 be set to C<fatal>.

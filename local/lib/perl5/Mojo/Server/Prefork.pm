@@ -2,11 +2,11 @@ package Mojo::Server::Prefork;
 use Mojo::Base 'Mojo::Server::Daemon';
 
 use Config;
-use File::Spec::Functions 'tmpdir';
-use Mojo::File 'path';
-use Mojo::Util 'steady_time';
-use POSIX 'WNOHANG';
-use Scalar::Util 'weaken';
+use File::Spec::Functions qw(tmpdir);
+use Mojo::File qw(path);
+use Mojo::Util qw(steady_time);
+use POSIX qw(WNOHANG);
+use Scalar::Util qw(weaken);
 
 has accepts            => 10000;
 has cleanup            => 1;
@@ -67,7 +67,7 @@ sub run {
     }
   };
   local $SIG{INT}  = local $SIG{TERM} = sub { $self->_term };
-  local $SIG{QUIT} = sub { $self->_term(1) };
+  local $SIG{QUIT} = sub                    { $self->_term(1) };
   local $SIG{TTIN} = sub { $self->workers($self->workers + 1) };
   local $SIG{TTOU} = sub {
     $self->workers > 0 ? $self->workers($self->workers - 1) : return;

@@ -1,1 +1,0 @@
-{"version":1.12,"target":"IO::Pty","dist":"IO-Tty-1.12","name":"IO::Tty","pathname":"T/TO/TODDR/IO-Tty-1.12.tar.gz","provides":{"IO::Tty::Constant":{"file":"Tty/Constant.pm"},"IO::Pty":{"file":"Pty.pm","version":1.12},"IO::Tty":{"file":"Tty.pm","version":1.12}}}

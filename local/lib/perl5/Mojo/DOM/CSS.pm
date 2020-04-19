@@ -1,7 +1,7 @@
 package Mojo::DOM::CSS;
 use Mojo::Base -base;
 
-use Mojo::Util 'trim';
+use Mojo::Util qw(trim);
 
 has 'tree';
 
@@ -163,7 +163,7 @@ sub _namespace {
 
   my $attr = $current->[1] =~ /^([^:]+):/ ? "xmlns:$1" : 'xmlns';
   while ($current) {
-    last if $current->[0] eq 'root';
+    last                               if $current->[0] eq 'root';
     return $current->[2]{$attr} eq $ns if exists $current->[2]{$attr};
 
     $current = $current->[3];

@@ -1,6 +1,8 @@
 
 package IO::Tty::Constant;
 
+our $VERSION = '1.14';
+
 use vars qw(@ISA @EXPORT_OK);
 require Exporter;
 
@@ -27,6 +29,8 @@ are defined on your system (prefixed with '+') and have compilation
 problems ('o').  Undefined or problematic constants are set to 'undef'.
 
 =head1 DEFINED CONSTANTS
+
+=over 4
 
 =item +
 
@@ -1092,6 +1096,8 @@ XMT1EN
 
 XTABS
 
+
+=back
 
 =head1 FOR MORE INFO SEE
 

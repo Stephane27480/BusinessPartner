@@ -20,6 +20,13 @@ use IO::Handle ();
 use constant ROLES =>
   !!(eval { require Role::Tiny; Role::Tiny->VERSION('2.000001'); 1 });
 
+# async/await support requires Future::AsyncAwait 0.36+
+use constant ASYNC => $ENV{MOJO_NO_ASYNC} ? 0 : !!(eval {
+  require Future::AsyncAwait;
+  Future::AsyncAwait->VERSION('0.36');
+  1;
+});
+
 # Protect subclasses using AUTOLOAD
 sub DESTROY { }
 
@@ -118,6 +125,14 @@ sub import {
       Carp::croak 'Role::Tiny 2.000001+ is required for roles' unless ROLES;
       Mojo::Util::monkey_patch($caller, 'has', sub { attr($caller, @_) });
       eval "package $caller; use Role::Tiny; 1" or die $@;
+    }
+
+    # async/await
+    elsif ($flag eq '-async_await') {
+      Carp::croak 'Future::AsyncAwait 0.36+ is required for async/await'
+        unless ASYNC;
+      require Mojo::Promise;
+      Future::AsyncAwait->import_into($caller, future_class => 'Mojo::Promise');
     }
 
     # Signatures (Perl 5.20+)
@@ -257,6 +272,15 @@ enable support for L<subroutine signatures|perlsub/"Signatures">.
   use Mojo::Base 'SomeBaseClass', -signatures;
   use Mojo::Base -role, -signatures;
 
+If you have L<Future::AsyncAwait> 0.36+ installed you can also use the
+C<-async_await> flag to activate the C<async> and C<await> keywords to deal much
+more efficiently with promises. Note that this feature is B<EXPERIMENTAL> and
+might change without warning!
+
+  # Also enable async/await
+  use Mojo::Base -strict, -async_await;
+  use Mojo::Base -base, -signatures, -async_await;
+
 This will also disable experimental warnings on versions of Perl where this
 feature was still experimental.
 
@@ -264,7 +288,7 @@ feature was still experimental.
 
 Fluent interfaces are a way to design object-oriented APIs around method
 chaining to create domain-specific languages, with the goal of making the
-readablity of the source code close to written prose.
+readability of the source code close to written prose.
 
   package Duck;
   use Mojo::Base -base;

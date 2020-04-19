@@ -1,0 +1,1 @@
+{"provides":{"IO::Tty":{"file":"Tty.pm","version":1.14},"IO::Pty":{"version":1.14,"file":"Pty.pm"},"IO::Tty::Constant":{"version":1.14,"file":"Tty/Constant.pm"}},"target":"IO::Pty","name":"IO::Tty","dist":"IO-Tty-1.14","version":1.14,"pathname":"T/TO/TODDR/IO-Tty-1.14.tar.gz"}
