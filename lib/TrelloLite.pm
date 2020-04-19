@@ -53,7 +53,7 @@ use warnings;
 use Moose;
 with 'Role::REST::Client';
 
-use 5.008;
+#use 5.008;
 our $VERSION = '1.00';
 
 use URI::Escape;
