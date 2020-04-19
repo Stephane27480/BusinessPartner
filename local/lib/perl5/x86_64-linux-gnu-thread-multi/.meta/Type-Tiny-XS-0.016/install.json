@@ -1,0 +1,1 @@
+{"version":"0.016","dist":"Type-Tiny-XS-0.016","target":"Type::Tiny::XS","name":"Type::Tiny::XS","pathname":"T/TO/TOBYINK/Type-Tiny-XS-0.016.tar.gz","provides":{"Type::Tiny::XS":{"version":"0.016","file":"lib/Type/Tiny/XS.pm"},"Type::Tiny::XS::Util":{"version":"0.016","file":"lib/Type/Tiny/XS/Util.pm"}}}

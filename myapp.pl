@@ -24,6 +24,7 @@ use Model::Users;
 use Model::UserInsee;
 use appSiren ;
 use appVies ;
+use appSOS ;
 
 
 #Helper to lazy initialize and store model object
@@ -47,7 +48,8 @@ get '/siren' => sub {
 			my $name = $c->param('name');
 			$params = "/siret?q=denominationUniteLegale:$name ";
 	}
-
+	# searching by department (first 2 car of cp)
+	# if lenght = 5 then search department
 if ( $c->param('cp')){
 	my $cp = $c->param('cp') ;
 	my $length_cp = 5 - length( $cp) ;
@@ -72,7 +74,7 @@ if ( $c->param('cp')){
 		$c->res->message( 'Not Authorised');
   		$c->render(text => '$c->res->message : Wrong username or password.');
 	}
-};
+};#siren
 
 get '/vies' => sub {
 	my $c = shift;
@@ -103,8 +105,25 @@ get '/vies' => sub {
 		$c->res->code(401);
 		$c->res->message( 'Not Authorised');
 		$c->render(text => $c->res->message );
-	};
+	};#vies
+get '/sos' => sub {
+	my $c = shift;
 
+	#get query parameters
+	my $desc 	= $c->param('desc');
+	my $msg		= $c->param('msg');
+	my $install = $c->param('install');
+	my $syst 	= $c->param('syst');
+	my $prod 	= $c->param('prod');
+	# call the apps
+	my $sos = appSOS=>new( 	desc 	=> 	$desc,
+							msg		=> 	$msg,
+							install	=>	$install,
+							syst	=>	$syst,
+							prod	=>	$prod
+						);
+	my $ret = $sos->main( );					
+	};#sos		
 };
 
 app->start;

@@ -1,0 +1,96 @@
+{
+   "abstract" : "REST Client Role",
+   "author" : [
+      "Kaare Rasmussen <kaare at cpan dot org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Module::Build version 0.4229",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "Role-REST-Client",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Module::Build" : "0.28"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : 0,
+            "Module::Build" : "0.28"
+         }
+      },
+      "runtime" : {
+         "recommends" : {
+            "Data::Serializer::JSON" : 0,
+            "Data::Serializer::XML::Simple" : 0,
+            "Data::Serializer::YAML" : 0,
+            "HTTP::Thin" : 0,
+            "JSON" : "2.00",
+            "XML::Simple" : 0,
+            "YAML" : 0
+         },
+         "requires" : {
+            "Carp" : 0,
+            "Data::Dumper" : 0,
+            "Data::Serializer::Raw" : 0,
+            "HTTP::Headers" : 0,
+            "HTTP::Message" : 0,
+            "HTTP::Response" : 0,
+            "HTTP::Status" : 0,
+            "HTTP::Thin" : 0,
+            "HTTP::Tiny" : 0,
+            "Moo" : "1.003000",
+            "Moo::Role" : 0,
+            "MooX::HandlesVia" : "0.001004",
+            "Try::Tiny" : 0,
+            "Type::Tiny" : "0.024",
+            "Types::Standard" : 0,
+            "URI::Escape::XS" : "0.11"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Data::Serializer::JSON" : 0,
+            "Data::Serializer::XML::Simple" : 0,
+            "Data::Serializer::YAML" : 0,
+            "File::Find" : 0,
+            "File::Temp" : 0,
+            "HTTP::Request" : 0,
+            "HTTP::Thin" : 0,
+            "JSON" : "2.00",
+            "Moose" : 0,
+            "Plack::Component" : 0,
+            "Plack::Request" : 0,
+            "Plack::Runner" : 0,
+            "Test::Deep" : 0,
+            "Test::Exception" : 0,
+            "Test::More" : "0.88",
+            "Test::TCP" : 0,
+            "Test::Warnings" : 0,
+            "XML::Simple" : 0,
+            "YAML" : 0,
+            "parent" : 0,
+            "strict" : 0,
+            "utf8" : 0,
+            "warnings" : 0
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/kaare/Role-REST-Client.git",
+         "web" : "http://github.com/kaare/Role-REST-Client"
+      }
+   },
+   "version" : "0.23",
+   "x_generated_by_perl" : "v5.20.3",
+   "x_serialization_backend" : "JSON::PP version 4.02"
+}

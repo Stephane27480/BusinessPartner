@@ -49,9 +49,9 @@ my $siret = '43267383800053';
 ok $data, "la réponse devrait être remplie";
 #print "$data\n" ;
 # write in a file
-open ($out), '>', "./../temp/response_siret.txt";
-	print $out  $data ;
-close $out;
+open my($etab), '>', "./../temp/response_siret.txt";
+	print $etab  $data ;
+close $etab;
 
 # test get the siret from adress 
 my $name = 'codilog';
@@ -62,7 +62,20 @@ my $cp = '80???';
 ok $data, "la réponse devrait être remplie";
 #print "$data\n" ;
 # write in a file
-open ($out), '>', "./../temp/response_name.txt";
-	print $out  $data ;
-close $out;
+open my ($adress), '>', "./../temp/response_name.txt";
+	print $adress  $data ;
+close $adress;
+
+# test get the siret from name
+$name = 'coquart';
+#my $cp = '80???';
+ $params = "/siret?q=denominationUniteLegale:$name ";
+ $data = $class->response(  $params );
+#my $data = $dataRef ;
+ok $data, "la réponse devrait être remplie";
+#print "$data\n" ;
+# write in a file
+open my ($nameonly), '>', "./../temp/response_nameionly.txt";
+	print $nameonly  $data ;
+close $nameonly;
 
