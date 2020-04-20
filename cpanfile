@@ -1,3 +1,4 @@
+requires 'URI::Escape::XS';
 requires 'Exception::Class';
 requires 'Throwable';
 requires 'Mojo::IOLoop::ReadWriteFork';
