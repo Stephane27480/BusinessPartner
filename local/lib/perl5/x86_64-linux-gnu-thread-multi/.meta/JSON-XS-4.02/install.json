@@ -1,1 +1,1 @@
-{"pathname":"M/ML/MLEHMANN/JSON-XS-4.02.tar.gz","provides":{"JSON::XS":{"file":"XS.pm","version":4.02}},"dist":"JSON-XS-4.02","target":"JSON::XS","version":4.02,"name":"JSON::XS"}
+{"dist":"JSON-XS-4.02","pathname":"M/ML/MLEHMANN/JSON-XS-4.02.tar.gz","provides":{"JSON::XS":{"file":"XS.pm","version":4.02}},"target":"JSON::XS","name":"JSON::XS","version":4.02}

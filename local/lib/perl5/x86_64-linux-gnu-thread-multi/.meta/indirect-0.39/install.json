@@ -1,1 +1,1 @@
-{"name":"indirect","pathname":"V/VP/VPIT/indirect-0.39.tar.gz","provides":{"indirect":{"file":"lib/indirect.pm","version":0.39}},"dist":"indirect-0.39","version":0.39,"target":"indirect"}
+{"provides":{"indirect":{"file":"lib/indirect.pm","version":0.39}},"target":"indirect","dist":"indirect-0.39","pathname":"V/VP/VPIT/indirect-0.39.tar.gz","version":0.39,"name":"indirect"}
