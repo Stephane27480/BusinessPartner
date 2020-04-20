@@ -1,0 +1,1 @@
+{"name":"Business::Tax::VAT::Validation","target":"Business::Tax::VAT::Validation","dist":"Business-Tax-VAT-Validation-1.12","version":1.12,"pathname":"B/BI/BIGPRESH/Business-Tax-VAT-Validation-1.12.tar.gz","provides":{"Business::Tax::VAT::Validation":{"file":"lib/Business/Tax/VAT/Validation.pm","version":1.12}}}
