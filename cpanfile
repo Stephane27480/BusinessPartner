@@ -1,4 +1,3 @@
-requires 'Moose';
 requires 'Exception::Class';
 requires 'Throwable';
 requires 'Mojo::IOLoop::ReadWriteFork';
