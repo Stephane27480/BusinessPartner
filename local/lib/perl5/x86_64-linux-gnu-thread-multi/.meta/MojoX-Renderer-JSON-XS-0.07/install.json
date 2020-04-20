@@ -1,1 +1,0 @@
-{"name":"MojoX::Renderer::JSON::XS","version":"0.07","pathname":"Y/YO/YOWCOW/MojoX-Renderer-JSON-XS-0.07.tar.gz","dist":"MojoX-Renderer-JSON-XS-0.07","target":"Mojolicious::Plugin::JSON::XS","provides":{"MojoX::Renderer::JSON::XS":{"file":"lib/MojoX/Renderer/JSON/XS.pm","version":"0.07"},"Mojolicious::Plugin::JSON::XS":{"file":"lib/Mojolicious/Plugin/JSON/XS.pm"}}}
