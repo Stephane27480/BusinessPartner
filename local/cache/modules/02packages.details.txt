@@ -4,8 +4,8 @@ Description:  Package names found in cpanfile.snapshot
 Columns:      package name, version, path
 Intended-For: Automated fetch routines, namespace documentation.
 Written-By:   Carton v1.0.28
-Line-Count:   419
-Last-Updated: Mon Apr 20 14:17:03 2020
+Line-Count:   421
+Last-Updated: Mon Apr 20 14:22:43 2020
 
 Class::Data::Inheritable           0.08  T/TM/TMTM/Class-Data-Inheritable-0.08.tar.gz
 Class::Load                        0.25  E/ET/ETHER/Class-Load-0.25.tar.gz
@@ -27,6 +27,8 @@ Class::MOP::Module               2.2012  E/ET/ETHER/Moose-2.2012.tar.gz
 Class::MOP::Object               2.2012  E/ET/ETHER/Moose-2.2012.tar.gz
 Class::MOP::Overload             2.2012  E/ET/ETHER/Moose-2.2012.tar.gz
 Class::MOP::Package              2.2012  E/ET/ETHER/Moose-2.2012.tar.gz
+Cpanel::JSON::XS                   4.19  R/RU/RURBAN/Cpanel-JSON-XS-4.19.tar.gz
+Cpanel::JSON::XS::Type            undef  R/RU/RURBAN/Cpanel-JSON-XS-4.19.tar.gz
 Data::OptList                     0.110  R/RJ/RJBS/Data-OptList-0.110.tar.gz
 Devel::GlobalDestruction           0.14  H/HA/HAARG/Devel-GlobalDestruction-0.14.tar.gz
 Devel::OverloadInfo               0.005  I/IL/ILMARI/Devel-OverloadInfo-0.005.tar.gz

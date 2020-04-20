@@ -658,3 +658,69 @@ C<EXE_FILES: bin/cpanel_json_xs>
 
 =back
 
+=head2 Mon Apr 20 12:23:03 2020: C<Module> L<IO::Tty|IO::Tty>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.14>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Mon Apr 20 12:23:09 2020: C<Module> L<Mojolicious|Mojolicious>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 8.37>
+
+=item *
+
+C<EXE_FILES: script/hypnotoad script/mojo script/morbo>
+
+=back
+
+=head2 Mon Apr 20 12:23:09 2020: C<Module> L<Mojo::IOLoop::ReadWriteFork|Mojo::IOLoop::ReadWriteFork>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.37>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
