@@ -636,3 +636,25 @@ C<EXE_FILES: bin/moose-outdated>
 
 =back
 
+=head2 Mon Apr 20 12:17:10 2020: C<Module> L<Cpanel::JSON::XS|Cpanel::JSON::XS>
+
+=over 4
+
+=item *
+
+C<installed into: /home/stephane/Documents/GitHub/BusinessPartner/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 4.19>
+
+=item *
+
+C<EXE_FILES: bin/cpanel_json_xs>
+
+=back
+
