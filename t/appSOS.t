@@ -7,10 +7,10 @@ use Moose;
 use appSOS;
 
 my $install ="1234";
-my $msg = '/CDLG/BP 001';
+my $msg = '_CDLG_BP 001';
 my $desc = 'Test pour SOS';
 my $syst = 'RE1CLNT100';
-my $prod = '';
+my $prod = ' ';
 
 my $request = appSOS->new(
 	install => 	$install,

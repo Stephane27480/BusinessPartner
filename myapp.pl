@@ -124,8 +124,18 @@ get '/sos' => sub {
 							syst	=>	$syst,
 							prod	=>	$prod
 						) ;
-	$c->res->code = $sos->main( ) ;
-	};#sos		
+	
+	my $returnCode = $sos->main( ) ;
+	$c->res->code( $returnCode );
+	if ($returnCode == 200 ) {
+		$c->res->message( 'Card Added');
+	}else{
+		$c->res->message( 'Card Not Added');
+	}
+		$c->render(text => $c->res->message );
+
+		
+};#sos		
 
 
 app->start;
