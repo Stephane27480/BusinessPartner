@@ -97,7 +97,7 @@ labels":[
 ]
 =cut
 
-	if ( $self->msg =~ m/^\/CDLG\/BP/) { $idLabels = "5e1751fa1dff2f7f45495480" ; } #ABAP 
+	if ( $self->msg =~ m/^_CDLG_BP/) { $idLabels = "5e1751fa1dff2f7f45495480" ; } #ABAP 
 	elsif  ( $self->msg =~ m/^PERL/) { $idLabels = "5e17520ca9a3f9790ef500e2" ;} #Perl 
 	else { $idLabels = "INIT"; }
 				

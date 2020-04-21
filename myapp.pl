@@ -50,12 +50,12 @@ get '/siren' => sub {
 	}
 	# searching by department (first 2 car of cp)
 	# if lenght = 5 then search department
-if ( $c->param('cp')){
-	my $cp = $c->param('cp') ;
-	my $length_cp = 5 - length( $cp) ;
-	$cp .= '?' x $length_cp ;
-	$params .= "AND codePostalEtablissement:$cp ";
-}	
+	if ( $c->param('cp')){
+		my $cp = $c->param('cp') ;
+		my $length_cp = 5 - length( $cp) ;
+		$cp .= '?' x $length_cp ;
+		$params .= "AND codePostalEtablissement:$cp ";
+	}	
 
 	# Check password
     if ($c->users->check($user, $pass)) {
@@ -116,7 +116,7 @@ get '/sos' => sub {
 	my $syst 	= $c->param('syst');
 	my $prod 	= $c->param('prod');
 	# call the apps
-	my $sos = appSOS=>new( 	desc 	=> 	$desc,
+	my $sos = appSOSr->new( desc 	=> 	$desc,
 							msg		=> 	$msg,
 							install	=>	$install,
 							syst	=>	$syst,
