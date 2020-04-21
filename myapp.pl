@@ -117,7 +117,7 @@ get '/sos' => sub {
 	my $install = $c->param('install');
 	my $syst 	= $c->param('syst');
 	my $prod 	= $c->param('prod');
-	if ($prod is undef ) { $prod = ' ';}
+	if ($prod is undef ) { $prod = ' ';};
 	# call the apps
 	my $sos = appSOS->new( 	desc 	=> 	$desc,
 							msg		=> 	$msg,
