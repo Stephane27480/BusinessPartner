@@ -74,11 +74,10 @@ get '/siren' => sub {
 		$c->res->message( 'Not Authorised');
   		$c->render(text => '$c->res->message : Wrong username or password.');
 	}
-}#siren
+};#siren
 
 get '/vies' => sub {
 	my $c = shift;
-
 	my $user = $c->req->url->to_abs->username;
 	my $pass = $c->req->url->to_abs->password;
 	#query parameters
@@ -106,18 +105,16 @@ get '/vies' => sub {
 		$c->res->message( 'Not Authorised');
 		$c->render(text => $c->res->message );
 	}
-} #vies	
+}; #vies	
 get '/sos' => sub {
-	
 	my $c = shift;
-
 	#get query parameters
 	my $desc 	= $c->param('desc');
 	my $msg		= $c->param('msg');
 	my $install = $c->param('install');
 	my $syst 	= $c->param('syst');
 	my $prod 	= $c->param('prod');
-	if ( $prod is undef ) { 
+	if !( defined $prod  ) { 
 		$prod = ' ';
 	}
 	# call the apps
