@@ -114,7 +114,7 @@ get '/sos' => sub {
 	my $install = $c->param('install');
 	my $syst 	= $c->param('syst');
 	my $prod 	= $c->param('prod');
-	if !( defined $prod  ) { 
+	if ( ! defined $prod ) { 
 		$prod = ' ';
 	}
 	# call the apps
