@@ -1,1 +1,1 @@
-{"version":0.14,"pathname":"D/DA/DANKOGAI/URI-Escape-XS-0.14.tar.gz","dist":"URI-Escape-XS-0.14","name":"URI::Escape::XS","provides":{"URI::Escape::XS":{"version":0.14,"file":"lib/URI/Escape/XS.pm"}},"target":"URI::Escape::XS"}
+{"pathname":"D/DA/DANKOGAI/URI-Escape-XS-0.14.tar.gz","provides":{"URI::Escape::XS":{"file":"lib/URI/Escape/XS.pm","version":0.14}},"target":"URI::Escape::XS","version":0.14,"name":"URI::Escape::XS","dist":"URI-Escape-XS-0.14"}
