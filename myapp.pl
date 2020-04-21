@@ -106,7 +106,8 @@ get '/vies' => sub {
 		$c->res->message( 'Not Authorised');
 		$c->render(text => $c->res->message );
 	};#vies
-post'/sos' => sub {
+	
+post '/sos' => sub {
 	
 	my $c = shift;
 
