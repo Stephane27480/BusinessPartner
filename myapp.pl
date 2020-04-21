@@ -74,7 +74,7 @@ get '/siren' => sub {
 		$c->res->message( 'Not Authorised');
   		$c->render(text => '$c->res->message : Wrong username or password.');
 	}
-};#siren
+}#siren
 
 get '/vies' => sub {
 	my $c = shift;
@@ -105,8 +105,8 @@ get '/vies' => sub {
 		$c->res->code(401);
 		$c->res->message( 'Not Authorised');
 		$c->render(text => $c->res->message );
-	};#vies
-};	
+	}
+} #vies	
 get '/sos' => sub {
 	
 	my $c = shift;
@@ -117,15 +117,17 @@ get '/sos' => sub {
 	my $install = $c->param('install');
 	my $syst 	= $c->param('syst');
 	my $prod 	= $c->param('prod');
-	if ($prod is undef ) { $prod = ' ';};
+	if ( $prod is undef ) { 
+		$prod = ' ';
+	}
 	# call the apps
 	my $sos = appSOS->new( 	desc 	=> 	$desc,
 							msg		=> 	$msg,
 							install	=>	$install,
 							syst	=>	$syst,
 							prod	=>	$prod
-						);
-	$c->res->code = $sos->main( );
+						) ;
+	$c->res->code = $sos->main( ) ;
 	};#sos		
 
 
