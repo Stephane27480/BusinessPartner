@@ -116,7 +116,7 @@ get '/sos' => sub {
 	my $syst 	= $c->param('syst');
 	my $prod 	= $c->param('prod');
 	# call the apps
-	my $sos = appSOSr->new( desc 	=> 	$desc,
+	my $sos = appSOS->new( 	desc 	=> 	$desc,
 							msg		=> 	$msg,
 							install	=>	$install,
 							syst	=>	$syst,
