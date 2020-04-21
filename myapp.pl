@@ -107,7 +107,7 @@ get '/vies' => sub {
 		$c->render(text => $c->res->message );
 	};#vies
 	
-post '/sos' => sub {
+get '/sos' => sub {
 	
 	my $c = shift;
 
@@ -126,6 +126,6 @@ post '/sos' => sub {
 						);
 	my $ret = $sos->main( );					
 	};#sos		
-};
+
 
 app->start;
