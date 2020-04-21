@@ -52,7 +52,7 @@ sub addCard {
 	my $name = $self->getName( );
 	my %args = ( 'name' => $self->desc, 'idList' => $self->idList, 'desc' => $name  );
 	$self->addLabel( \%args );
-	return $self->trello->post( "cards", \%args );
+	return $self->trello->post( "card", \%args );
 		#{name => $self->desc, idList => $self->idList, desc => $name  } );
    
 }
