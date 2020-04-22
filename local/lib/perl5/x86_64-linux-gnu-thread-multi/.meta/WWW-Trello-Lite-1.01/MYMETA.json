@@ -1,0 +1,58 @@
+{
+   "abstract" : "Simple wrapper around the Trello web service.",
+   "author" : [
+      "Robert Wohlfarth <rbwohlfarth@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Module::Install version 1.06, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "WWW-Trello-Lite",
+   "no_index" : {
+      "directory" : [
+         "inc",
+         "t"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.59",
+            "Test::More" : "0.88",
+            "Test::Pod" : "1.44"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "HTTP::Tiny" : "0.022",
+            "IO::Socket::SSL" : "1.74",
+            "Moose" : "1.21",
+            "Net::SSLeay" : "1.55",
+            "Role::REST::Client" : "0.10",
+            "Role::REST::Client::Response" : "0.10",
+            "Test::More" : "0.88",
+            "Test::Pod" : "1.44",
+            "URI::Escape" : "3.30",
+            "perl" : "5.008"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "1.00",
+   "x_serialization_backend" : "JSON::PP version 4.02"
+}
