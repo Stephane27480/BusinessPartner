@@ -27,37 +27,6 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
-  Data-Serializer-0.65
-    pathname: N/NE/NEELY/Data-Serializer-0.65.tar.gz
-    provides:
-      Data::Serializer 0.65
-      Data::Serializer::Bencode 0.03
-      Data::Serializer::Config::General 0.02
-      Data::Serializer::Convert::Bencode 0.03
-      Data::Serializer::Convert::Bencode_XS 0.03
-      Data::Serializer::Cookbook 0.05
-      Data::Serializer::Data::Denter 0.02
-      Data::Serializer::Data::Dumper 0.05
-      Data::Serializer::Data::Taxi 0.02
-      Data::Serializer::FreezeThaw 0.02
-      Data::Serializer::JSON 0.04
-      Data::Serializer::JSON::Syck 0.02
-      Data::Serializer::PHP::Serialization 0.02
-      Data::Serializer::Persistent 0.01
-      Data::Serializer::Raw 0.02
-      Data::Serializer::Storable 0.03
-      Data::Serializer::XML::Dumper 0.02
-      Data::Serializer::XML::Simple 0.03
-      Data::Serializer::YAML 0.03
-      Data::Serializer::YAML::Syck 0.03
-    requirements:
-      AutoLoader 0
-      Data::Dumper 2.08
-      Digest::SHA 0
-      Exporter 0
-      File::Spec 0
-      IO::File 0
-      Test::More 0
   Devel-StackTrace-2.04
     pathname: D/DR/DROLSKY/Devel-StackTrace-2.04.tar.gz
     provides:
