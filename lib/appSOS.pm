@@ -19,7 +19,7 @@ use Modern::Perl '2018';
 use Moose;
 use FindBin;
 use lib "$FindBin::Bin/./";
-use WWW::Trello::Lite;
+use TrelloLite;
 
 #Attributes
 has 'key',		is	=>	'ro',	isa =>	'Str',	writer => '_set_key';
@@ -60,7 +60,7 @@ sub addCard {
 sub _build_trello {
 	my $self = shift;
 	$self->set_attr( );
-	return WWW::Trello::Lite->new(
+	return TrelloLite->new(
 			key		=>	$self->key,
 			token	=>	$self->token
 		);
