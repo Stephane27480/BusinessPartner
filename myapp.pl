@@ -132,8 +132,7 @@ get '/sos' => sub {
 	#}else{
 	#	$c->res->message( 'Card Not Added');
 	#}
-		$c->render(text => $c->res->message );
-
+		$c->render( json => $c->res->message );
 		
 };#sos		
 
