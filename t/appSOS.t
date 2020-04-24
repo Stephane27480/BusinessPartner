@@ -21,4 +21,4 @@ my $request = appSOS->new(
 );
 # Add a new card...
 my $response = $request->main( );
-is( $response, '200', 'Card added' );
+is( $response->code, '200', 'Card added' );

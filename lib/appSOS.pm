@@ -19,7 +19,7 @@ use Modern::Perl '2018';
 use Moose;
 use FindBin;
 use lib "$FindBin::Bin/./";
-use TrelloLite;
+use MojoTrello;
 
 #Attributes
 has 'key',		is	=>	'ro',	isa =>	'Str',	writer => '_set_key';
@@ -43,8 +43,8 @@ sub set_attr {
 sub main {
 	my $self = shift ;
 	my $name = $self->install . $self->syst . $self->msg ;
-	my $response = $self->addCard( $name );
-	return $response->code ;
+	my $response  = $self->addCard( $name );
+	return $response ;
 }
 
 sub addCard {
@@ -52,7 +52,7 @@ sub addCard {
 	my $name = $self->getName( );
 	my %args = ( 'name' => $self->desc, 'idList' => $self->idList, 'desc' => $name  );
 	$self->addLabel( \%args );
-	return $self->trello->post( "card", \%args );
+	return $self->trello->main( "create","card", \%args );
 		#{name => $self->desc, idList => $self->idList, desc => $name  } );
    
 }
@@ -60,7 +60,7 @@ sub addCard {
 sub _build_trello {
 	my $self = shift;
 	$self->set_attr( );
-	return TrelloLite->new(
+	return MojoTrello->new(
 			key		=>	$self->key,
 			token	=>	$self->token
 		);
