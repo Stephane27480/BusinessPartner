@@ -126,14 +126,13 @@ get '/sos' => sub {
 						) ;
 	
 	my $return = $sos->main( ) ;
-	#	c->res( $return );
-	#	$c->res->code( $return->code );
-	#if ($return->code == 200 ) {
-	#	$c->res->message( 'Card Added');
-	#}else{
-	#	$c->res->message( 'Card Not Added');
-	#}
+	if ($return->code == 200 ) {
+		$c->res->message( 'Card Added');
+		$c->render( json => $return->body );
+	}else{
+		$c->res->message( 'Card Not Added');
 		$c->render( text => $c->res->message );
+	}
 		
 };#sos		
 
