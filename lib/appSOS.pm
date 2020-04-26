@@ -76,10 +76,6 @@ sub getName {
 	return $name ;
 }
 
-sub addLabel {
-	my $self = shift;
-	my $argsRef = shift;
-	my $idLabels ;
 =pod
 =head1	
 labels":[
@@ -97,7 +93,26 @@ labels":[
 ]
 =cut
 
-	if ( $self->msg =~ m/^_CDLG_BP/) { $idLabels = "5e1751fa1dff2f7f45495480" ; } #ABAP 
+sub addLabel {
+	my $self 		= shift ;
+	my $argsRef 	= shift ;
+	my $idLabels 	= 'INIT' ;
+
+	if ( $self->msg =~ m/^_CDLG_BP/ ) { #ABAP
+		$idLabels = "5e1751fa1dff2f7f45495480" ; 
+		if ( $self->desc =~ m/bp_categ/ ) { #Table
+			$self->addArg( $argsRef,'idCardSource', "5ea5567521bdd871b53747e9" ) ; 
+			$self->addArg( $argsRef,'keepFromSource', 'checklists' ) ; 
+		} elsif ( $self->desc =~ m/bp_taille/ ) {
+			$self->addArg( $argsRef,'idCardSource', "5ea5636ed904bc17e463c35a" ) ; 
+			$self->addArg( $argsRef,'keepFromSource', 'checklists' ) ; 
+		
+		} elsif ( $self->desc =~ m/bp_activit/ ) {
+			$self->addArg( $argsRef,'idCardSource', "5ea5649afa73483f1c6ceb84" ) ; 
+			$self->addArg( $argsRef,'keepFromSource', 'checklists' ) ; 
+
+		}# table
+	} # ABAP
 	elsif  ( $self->msg =~ m/^PERL/) { $idLabels = "5e17520ca9a3f9790ef500e2" ;} #Perl 
 	else { $idLabels = "INIT"; }
 				
@@ -105,6 +120,7 @@ labels":[
 		$self->addArg($argsRef,'idLabels', $idLabels) ; 
 	}
 }
+
 
 sub addArg {
 	my ($self, $argsRef, $key, $value) = @_ ;
