@@ -107,7 +107,7 @@ sub addLabel {
 			$self->addArg( $argsRef,'idCardSource', "5ea5636ed904bc17e463c35a" ) ; 
 			$self->addArg( $argsRef,'keepFromSource', 'checklists' ) ; 
 		
-		} elsif ( $self->desc =~ m/bp_activit/ ) {
+		} elsif ( $self->desc =~ m/bp_activt/ ) {
 			$self->addArg( $argsRef,'idCardSource', "5ea5649afa73483f1c6ceb84" ) ; 
 			$self->addArg( $argsRef,'keepFromSource', 'checklists' ) ; 
 
