@@ -115,8 +115,8 @@ get '/vies' => sub {
 			$c->render( text => $c->res->message );
 		}
 	} else {
-			my $vies1SOS = appSOS->new( desc 	=> 	"$vies->{errorText}",
-										msg		=> 	"PERL VIES $vies->{errorCode}",
+			my $vies1SOS = appSOS->new( desc 	=> 	"Not Authorized",
+										msg		=> 	"PERL VIES 401}",
 										install	=>	"CDLG",
 										syst	=>	"SCP",
 										prod	=>	"X"
