@@ -70,6 +70,13 @@ get '/siren' => sub {
 		my $data = $class->main( );
 		$c->render(json => $data ); 					
 	} else {# Failed
+			my $InseeSOS = appSOS->new( desc 	=> 	"Not authorized :Wrong username or password",
+										msg		=> 	"PERL INSEE 401 }",
+										install	=>	"CDLG",
+										syst	=>	"SCP",
+										prod	=>	"X"
+										) ;
+		
 		$c->res->code(401);
 		$c->res->message( 'Not Authorised');
   		$c->render(text => '$c->res->message : Wrong username or password.');
@@ -97,10 +104,23 @@ get '/vies' => sub {
 			} else {
 				$c->res->code( 500) ;
 			}
+			# call the SOS  apps
+			my $viesSOS = appSOS->new( 	desc 	=> 	"$vies->{errorText}",
+										msg		=> 	"PERL VIES $vies->{errorCode}",
+										install	=>	"CDLG",
+										syst	=>	"SCP",
+										prod	=>	"X"
+										) ;
 			$c->res->message(" $vies->{errorCode} : $vies->{errorText} ") ;
 			$c->render( text => $c->res->message );
 		}
 	} else {
+			my $vies1SOS = appSOS->new( desc 	=> 	"$vies->{errorText}",
+										msg		=> 	"PERL VIES $vies->{errorCode}",
+										install	=>	"CDLG",
+										syst	=>	"SCP",
+										prod	=>	"X"
+										) ;
 		$c->res->code(401);
 		$c->res->message( 'Not Authorised');
 		$c->render(text => $c->res->message );
