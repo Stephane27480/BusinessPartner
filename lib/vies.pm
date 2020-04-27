@@ -62,16 +62,24 @@ sub _build_vies {
 sub main {
 	my $self = shift ;
 	my $vat_check;
+	my $viesSOS;
 	my $ms_check = $self->check_country( );
 	if ($ms_check == 1){
 		$vat_check = $self->check_vat( );
 		print " vat check : $vat_check\n";
 		if ( $vat_check ==1 ){
 			return $self->vat;
-		}	
-	} else {
-		my $viesSOS = appSOS->new( 	desc 	=> 	"$self->{errorText}",
+		} else {
+		$viesSOS = appSOS->new( 	desc 	=> 	"$self->{errorText}",
 									msg		=> 	"PERL VIES $self->{errorCode}",
+									install	=>	"CDLG",
+									syst	=>	"SCP",
+									prod	=>	"X"
+									) ;
+
+	} else {
+		$viesSOS = appSOS->new( 	desc 	=> 	"Pays non membre",
+									msg		=> 	"PERL VIES MS",
 									install	=>	"CDLG",
 									syst	=>	"SCP",
 									prod	=>	"X"
