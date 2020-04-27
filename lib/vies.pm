@@ -76,7 +76,7 @@ sub main {
 									syst	=>	"SCP",
 									prod	=>	"X"
 									) ;
-
+		}
 	} else {
 		$viesSOS = appSOS->new( 	desc 	=> 	"Pays non membre",
 									msg		=> 	"PERL VIES MS",
