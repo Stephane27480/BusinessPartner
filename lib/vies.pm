@@ -20,6 +20,7 @@ use Moose;
 use FindBin;
 use lib "$FindBin::Bin/./";
 use Business::Tax::VAT::Validation;
+use appSOS 
 
 =pod
 
@@ -64,11 +65,20 @@ sub main {
 	my $ms_check = $self->check_country( );
 	if ($ms_check == 1){
 		$vat_check = $self->check_vat( );
+		print " vat check : $vat_check\n";
 		if ( $vat_check ==1 ){
 			return $self->vat;
 		}	
+	} else {
+		my $viesSOS = appSOS->new( 	desc 	=> 	"$self->{errorText}",
+									msg		=> 	"PERL VIES $self->{errorCode}",
+									install	=>	"CDLG",
+									syst	=>	"SCP",
+									prod	=>	"X"
+									) ;
+
+		return undef ;
 	}
-	return undef;
 }
 
 =pod
@@ -90,6 +100,7 @@ sub check_country {
  	 else{
     	$ret_val = 0 ;
 	}
+	return $ret_val;
 }
 
 =pod
@@ -104,15 +115,17 @@ sub check_country {
 sub check_vat {
 	my $self = shift ;
 	my $ret_val;
-	 if ($self->vies->check($self->vat)){
+	 if ($self->vies->check($self->vat) == -1){
+		 print "passe\n";
 		$ret_val = 1; }
 	elsif ( $self->vies->get_last_error_code( ) < 17 ){
 		$self->errorCode( $self->vies->get_last_error_code( ) ) ;
 		$self->errorText( $self->vies->get_last_error( ) );
 		$ret_val = 0 ; }
 	else {
-		
-			$ret_val = 0; #$self->local_check( );
+		$self->errorCode( $self->vies->get_last_error_code( ) ) ;
+		$self->errorText( $self->vies->get_last_error( ) );
+		$ret_val = 0; #$self->local_check( );
 		}
 	return $ret_val ;		
 }

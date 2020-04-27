@@ -105,12 +105,6 @@ get '/vies' => sub {
 				$c->res->code( 500) ;
 			}
 			# call the SOS  apps
-			my $viesSOS = appSOS->new( 	desc 	=> 	"$vies->{errorText}",
-										msg		=> 	"PERL VIES $vies->{errorCode}",
-										install	=>	"CDLG",
-										syst	=>	"SCP",
-										prod	=>	"X"
-										) ;
 			$c->res->message(" $vies->{errorCode} : $vies->{errorText} ") ;
 			$c->render( text => $c->res->message );
 		}
