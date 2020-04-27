@@ -76,7 +76,7 @@ get '/siren' => sub {
 										syst	=>	"SCP",
 										prod	=>	"X"
 										) ;
-		
+		InseeSOS->main( );	
 		$c->res->code(401);
 		$c->res->message( 'Not Authorised');
   		$c->render(text => '$c->res->message : Wrong username or password.');
@@ -109,12 +109,13 @@ get '/vies' => sub {
 			$c->render( text => $c->res->message );
 		}
 	} else {
-			my $vies1SOS = appSOS->new( desc 	=> 	"Not Authorized",
+			my $viesSOS = appSOS->new( desc 	=> 	"Not Authorized",
 										msg		=> 	"PERL VIES 401}",
 										install	=>	"CDLG",
 										syst	=>	"SCP",
 										prod	=>	"X"
 										) ;
+			$viesSOS->main( );									
 		$c->res->code(401);
 		$c->res->message( 'Not Authorised');
 		$c->render(text => $c->res->message );

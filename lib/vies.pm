@@ -67,15 +67,17 @@ sub main {
 	if ($ms_check == 1){
 		$vat_check = $self->check_vat( );
 		print " vat check : $vat_check\n";
-		if ( $vat_check ==1 ){
+		if ( $vat_check == 1 ){
 			return $self->vat;
 		} else {
-		$viesSOS = appSOS->new( 	desc 	=> 	"$self->{errorText}",
+			$viesSOS = appSOS->new(	desc 	=> 	"VIES $self->{errorCode}",
 									msg		=> 	"PERL VIES $self->{errorCode}",
 									install	=>	"CDLG",
 									syst	=>	"SCP",
 									prod	=>	"X"
 									) ;
+			$viesSOS->main( ) ;
+			return undef ;
 		}
 	} else {
 		$viesSOS = appSOS->new( 	desc 	=> 	"Pays non membre",
@@ -84,7 +86,7 @@ sub main {
 									syst	=>	"SCP",
 									prod	=>	"X"
 									) ;
-
+		$viesSOS->main( );
 		return undef ;
 	}
 }
