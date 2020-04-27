@@ -20,7 +20,7 @@ use Moose;
 use FindBin;
 use lib "$FindBin::Bin/./";
 use Business::Tax::VAT::Validation;
-use appSOS 
+use appSOS; 
 
 =pod
 
