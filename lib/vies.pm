@@ -20,7 +20,6 @@ use Moose;
 use FindBin;
 use lib "$FindBin::Bin/./";
 use Business::Tax::VAT::Validation;
-use appSOS; 
 
 =pod
 
@@ -62,33 +61,14 @@ sub _build_vies {
 sub main {
 	my $self = shift ;
 	my $vat_check;
-	my $viesSOS;
 	my $ms_check = $self->check_country( );
 	if ($ms_check == 1){
 		$vat_check = $self->check_vat( );
-		print " vat check : $vat_check\n";
-		if ( $vat_check == 1 ){
+		if ( $vat_check ==1 ){
 			return $self->vat;
-		} else {
-			$viesSOS = appSOS->new(	desc 	=> 	"VIES $self->{errorCode}",
-									msg		=> 	"PERL VIES $self->{errorCode}",
-									install	=>	"CDLG",
-									syst	=>	"SCP",
-									prod	=>	"X"
-									) ;
-			$viesSOS->main( ) ;
-			return undef ;
-		}
-	} else {
-		$viesSOS = appSOS->new( 	desc 	=> 	"Pays non membre",
-									msg		=> 	"PERL VIES MS",
-									install	=>	"CDLG",
-									syst	=>	"SCP",
-									prod	=>	"X"
-									) ;
-		$viesSOS->main( );
-		return undef ;
+		}	
 	}
+	return undef;
 }
 
 =pod
@@ -110,7 +90,6 @@ sub check_country {
  	 else{
     	$ret_val = 0 ;
 	}
-	return $ret_val;
 }
 
 =pod
@@ -125,17 +104,17 @@ sub check_country {
 sub check_vat {
 	my $self = shift ;
 	my $ret_val;
-	 if ($self->vies->check($self->vat) == -1){
-		 print "passe\n";
+	 if ($self->vies->check($self->vat)){
 		$ret_val = 1; }
 	elsif ( $self->vies->get_last_error_code( ) < 17 ){
 		$self->errorCode( $self->vies->get_last_error_code( ) ) ;
 		$self->errorText( $self->vies->get_last_error( ) );
 		$ret_val = 0 ; }
 	else {
-		$self->errorCode( $self->vies->get_last_error_code( ) ) ;
-		$self->errorText( $self->vies->get_last_error( ) );
-		$ret_val = 0; #$self->local_check( );
+		my $errorCode =  $self->vies->get_last_error_code( )  ;
+		my $errorText =  $self->vies->get_last_error( ) ;
+		print "error code $errorCode $errorText \n";
+		$ret_val = $self->local_check( );
 		}
 	return $ret_val ;		
 }
@@ -150,6 +129,7 @@ sub check_vat {
 sub local_check {
 	my $self = shift;
 	# returns 1 if valid 0 if invalid
+	print "Local Check \n";
   	my $ret_value = $self->vies->local_check($self->vat);
 }	
 
@@ -163,6 +143,7 @@ sub local_check {
 
 sub get_info {
 	my ($self, $param ) = @_ ;
+	print " Param : $param \n";
 	my $value = $self->vies->informations( $param );
 	return $value ;
 }

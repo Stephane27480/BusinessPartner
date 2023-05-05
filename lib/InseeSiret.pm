@@ -36,7 +36,7 @@ package InseeSiret {
  has 'consKey', is => 'ro', isa => 'Str';
  has 'secKey', is => 'ro', isa => 'Str';
  has 'token', is => 'ro', isa => 'Str', writer => '_set_token';
- has 'date', is=> 'ro', isa => 'Str', default => strftime( "%F", localtime);
+ has 'date', is=> 'ro', isa => 'Str',   default =>set_date( );
 
  #Methods
  
@@ -71,6 +71,23 @@ sub get_token {
 				} );							
 			}
 		}
+=pod
+
+=head1 method set_date
+	This method is used to set the date of the request
+
+=cut
+
+sub set_date {
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime ;
+        $year += 1900 ;
+	$mon += 1 ;
+	if ($mon < 10 ) { $mon = "0$mon";}
+	if ($mday < 10) { $mday ="0$mday";}
+	my $date = "$year-$mon-$mday";
+	return $date ;
+
+}
 =pod
 
 =head1 revoke_token
@@ -121,28 +138,17 @@ sub revoke_token {
 
 sub response {
 	my $self = shift;
-	#	my $siren = shift ;
-	my $param = shift ;
+	my $siren = shift ;
 	my $date = $self->date ;
 	#Create the parameters
 	#Take only the siret that have never been closed
-	my $respData ;
-	my $exit ;
-	my $control = 'C'; #C= Continue E Exit
-	my $curseur = '*';
-	my $curseurTemp;
-
-	while ( $control eq 'C' ){
-	my $compl = " AND -periode(etatAdministratifEtablissement:F)&date=$date&curseur=$curseur&nombre=1000";	
-	my $params = $param . $compl; #"/siret?q=siren:$siren ";
-	print "$params\n";
+	my $params = "/siret?q=siren:$siren AND -periode(etatAdministratifEtablissement:F)&date=$date";
 	my $uri = "https://api.insee.fr/entreprises/sirene/V3" . $params;
 	my $url = Mojo::URL->new("$uri");
 	
 	my $ua = Mojo::UserAgent->new;
 	my $tx = $ua->build_tx( GET => $url);			 
-	$curseurTemp = ();
-	
+
 	# create the header
 	$tx->req->headers->accept('application/json');
 	$tx->req->headers->authorization("Bearer $self->{token}");
@@ -151,29 +157,9 @@ sub response {
 	$ua->start($tx);
 
 		if ( $tx->result->code == 200 ){
-			# my $total = $tx->result->total ;			
-				my $respDataTemp =  $tx->result->body ;
+				my $respData =  $tx->result->body ;
 				# say dumper( $respData );
-				 ($control, $curseurTemp ) = $self->analyseResponse( $respDataTemp );
-				if (($curseur eq '*') and ( $control eq 'E')) {
-					$respData = $respDataTemp;
-					return $respData ;
-				}elsif (( $curseur ne '*') and ($control eq 'E')) {
-					$respDataTemp =~ s/^\{"header.*?etablissements":\[/,/ ;
-				 	$respData =~ s/\]\}$//;
-					$respData .= $respDataTemp ;
-					$respData =~ s/,\]\}$/\]\}/;
-					return $respData ;
-				}elsif (($curseur eq '*') and ($control eq 'C')) {
-					$curseur = $curseurTemp;
-					$respData .= $respDataTemp ;
-				}else{
-					$curseur = $curseurTemp;
-					$respDataTemp =~ s/^\{"header.*?etablissements":\[/,/;
-                    $respData =~ s/\]\}$//;
-                    $respData .=  $respDataTemp ;
-				}
-				
+				return $respData ;
 			} else {
 				#	say $tx->res->to_string;
 				print  $tx->result->code . "\n";
@@ -183,22 +169,6 @@ sub response {
 				} );							
 			} 
 	}
-}
-sub analyseResponse {
-	my $self = shift ;
-	my $dataRaw = shift ;
-	my $dataRef = decode_json( $dataRaw  );
-	my $control ;
-	my $headerRef = $dataRef->{header};
-	if (( $headerRef->{curseur} eq '*' ) and ( $headerRef->{total} <= $headerRef->{nombre} )) {
-		$control = 'E';
-	}elsif ($headerRef->{curseur} eq $headerRef->{curseurSuivant} ) {
-		$control = 'E' ;
-	}else{
-		$control = 'C';
-	}	
-	
-return ($control, $headerRef->{curseurSuivant});
-	}
+
 1;
 }
